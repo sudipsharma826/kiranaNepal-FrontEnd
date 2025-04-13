@@ -7,6 +7,8 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(true);
   const [isSeller, setIsSeller] = useState(false);
   const {showUserLogin ,setShowUserlogin} = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const value= {
     navigate,
     user,
@@ -15,6 +17,8 @@ export const AppProvider = ({ children }) => {
     setIsSeller,
     showUserLogin,
     setShowUserlogin,
+    menuOpen,
+    setMenuOpen,
   };
   return (
     <AppContext.Provider value={value}>
