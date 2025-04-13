@@ -93,7 +93,7 @@ const Footer = () => {
               <Heart className="w-4 h-4 text-red-500" />
               <span>by</span>
               <a
-                href="https://sudipsharma.com.np"
+                href="https://sudipsharma.info.np"
                 className="text-indigo-400 hover:text-indigo-300 font-medium ml-1 transition-colors"
               >
                 Sudip Sharma

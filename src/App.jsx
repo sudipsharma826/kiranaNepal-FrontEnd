@@ -6,6 +6,8 @@ import Categorie from './pages/Categorie';
 import Product from './pages/Product';
 import Offers from './pages/Offers';
 import MyOrders from './pages/MyOrders';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
 
 const App = () => {
   // check if the path is seller
@@ -22,6 +24,8 @@ const App = () => {
           <Route path='/products' element={<Product />} />
           <Route path='/offers' element={< Offers />} />
           <Route path='/orders' element={< MyOrders />} />
+          <Route path ="/login" element={<LoginPage />} />
+          <Route path ="/signup" element={<SignUpPage />} />
         </Routes>
       </div>
     </>
