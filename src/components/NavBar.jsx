@@ -52,7 +52,7 @@ const NavBar = () => {
                     </button>
                 ) : (
                     <div className="relative group">
-                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200" alt="User" className="w-10 h-10 rounded-full cursor-pointer" />
+                        <img src="/assets/profile_icon.png" alt="User" className="w-10 h-10 rounded-full cursor-pointer" />
                         <ul className='hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40'>
                             <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Profile</li>
                             <li className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>Settings</li>
