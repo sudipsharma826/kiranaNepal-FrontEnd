@@ -8,6 +8,11 @@ import Offers from './pages/Offers';
 import MyOrders from './pages/MyOrders';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import Carts from './pages/Carts';
+import Footer from './components/Footer';
+import SingleProductPage from './pages/ProductPage';
+import ProductPage from './pages/ProductPage';
+import SingleCategoryPage from './pages/SingleCategoryPage';
 
 const App = () => {
   // check if the path is seller
@@ -26,8 +31,12 @@ const App = () => {
           <Route path='/orders' element={< MyOrders />} />
           <Route path ="/login" element={<LoginPage />} />
           <Route path ="/signup" element={<SignUpPage />} />
+          <Route path='/cart' element={<Carts  />} />
+          <Route path='/product/:id' element={<ProductPage />} />
+          <Route path="/category/:categoryId" element={<SingleCategoryPage />} />
         </Routes>
       </div>
+      <Footer />
     </>
   );
 };

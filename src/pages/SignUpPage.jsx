@@ -3,7 +3,7 @@ import SignUp from '../components/SignUp'
 
 const SignUpPage = () => {
   return (
-    <div className='flex justify-center items-center h-screen bg-gray-100'>
+    <div className='items-center justify-center flex h-screen bg-gray-200'>
         <SignUp />
         </div>
   )
