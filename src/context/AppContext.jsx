@@ -8,7 +8,7 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate();
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const [isSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false); // Fixed typo
   const [menuOpen, setMenuOpen] = useState(false);

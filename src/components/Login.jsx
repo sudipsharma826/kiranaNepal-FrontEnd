@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useAppContext } from "../context/AppContext";
 
 const Login = ({ onClose }) => {
+  const {user, setUser,setShowUserLogin}= useAppContext();
   const [formType, setFormType] = useState("login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,6 +20,12 @@ const Login = ({ onClose }) => {
     } else {
       alert(`Logged in with Email: ${email}`);
     }
+    setUser({ 
+      email: email,
+      name: name,
+    });
+    console.log("user",user);
+    setShowUserLogin(false);
   };
 
   // This is triggered when clicking outside the form
