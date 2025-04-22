@@ -14,6 +14,8 @@ export const AppProvider = ({ children }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
+  const [searchQuery, setSearchQuery] = useState({});
+  console.log("Search Query:", searchQuery); // Log the search query to check its value
   const currency = "Rs.";
 
   useEffect(() => {
@@ -56,6 +58,8 @@ export const AppProvider = ({ children }) => {
     cartItems,
     addToCart,
     removeFromCart,
+    searchQuery,
+    setSearchQuery
   };
 
   return (

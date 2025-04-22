@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, ShoppingCart, Heart, ChevronDown } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 const Products = () => {
-  const { products, currency, cartItems, addToCart, removeFromCart } = useAppContext();
+  const {
+    products,
+    currency,
+    cartItems,
+    addToCart,
+    removeFromCart,
+    searchQuery,
+  } = useAppContext();
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // Update filtered products based on search query
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      const filtered = products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [products, searchQuery]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 py-16 px-6 lg:px-12">
@@ -11,8 +32,12 @@ const Products = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
           <div>
-            <h1 className="text-4xl font-extrabold text-gray-900 mb-3">🛍️ Explore All Products</h1>
-            <p className="text-gray-600 text-lg">Browse our full catalog of amazing products</p>
+            <h1 className="text-4xl font-extrabold text-gray-900 mb-3">
+              🛍️ Explore All Products
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Browse our full catalog of amazing products
+            </p>
           </div>
           {/* Filters */}
           <div className="flex flex-wrap gap-3 mt-6 md:mt-0">
@@ -29,7 +54,7 @@ const Products = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => {
+          {filteredProducts.map((product) => {
             const inCart = cartItems[product.id] || 0;
 
             return (
@@ -59,25 +84,39 @@ const Products = () => {
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h3 className="text-lg font-bold text-gray-900 leading-snug">{product.name}</h3>
+                      <h3 className="text-lg font-bold text-gray-900 leading-snug">
+                        {product.name}
+                      </h3>
                       <p className="text-sm text-gray-500 mt-1">{product.category}</p>
                     </div>
-                    <p className="text-lg font-bold text-primary">{currency} {product.price}</p>
+                    <p className="text-lg font-bold text-primary">
+                      {currency} {product.price}
+                    </p>
                   </div>
 
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">{product.description}</p>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {product.description}
+                  </p>
 
                   <div className="flex items-center gap-2 mb-5">
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+                          className={`w-4 h-4 ${
+                            i < Math.floor(product.rating)
+                              ? 'text-yellow-400 fill-yellow-400'
+                              : 'text-gray-300'
+                          }`}
                         />
                       ))}
                     </div>
-                    <span className="text-sm font-medium text-gray-700">{product.rating}</span>
-                    <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      {product.rating}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      ({product.reviews} reviews)
+                    </span>
                   </div>
 
                   {inCart === 0 ? (
@@ -113,5 +152,5 @@ const Products = () => {
     </div>
   );
 };
-export default Products;
 
+export default Products;

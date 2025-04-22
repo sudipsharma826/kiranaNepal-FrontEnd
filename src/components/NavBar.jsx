@@ -10,7 +10,9 @@ const NavBar = () => {
         setShowUserLogin,
         navigate,
         menuOpen,
-        setMenuOpen
+        setMenuOpen,
+        setSearchQuery,
+        searchQuery
     } = useAppContext();
 
     const [showDropdown, setShowDropdown] = useState(false);
@@ -31,7 +33,14 @@ const NavBar = () => {
         setMenuOpen(false);
     };
 
-    // Click outside to close dropdown
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim().length > 0) {
+            navigate('/products');
+            setMenuOpen(false);
+        }
+    };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -76,14 +85,19 @@ const NavBar = () => {
                 )}
 
                 {/* Search Bar */}
-                <div className="hidden lg:flex items-center gap-2 border px-4 py-2 rounded-full bg-gray-50 hover:bg-gray-100 transition">
+                <form
+                    onSubmit={handleSearchSubmit}
+                    className="hidden lg:flex items-center gap-2 border px-4 py-2 rounded-full bg-gray-50 hover:bg-gray-100 transition"
+                >
                     <Search className="w-4 h-4 text-gray-500" />
                     <input
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        
                         type="text"
                         placeholder="Search products"
                         className="w-full bg-transparent outline-none placeholder-gray-500 text-sm"
                     />
-                </div>
+                </form>
 
                 {/* Cart */}
                 <div
@@ -147,14 +161,16 @@ const NavBar = () => {
             {/* Mobile Sidebar */}
             <div className={`${menuOpen ? 'translate-x-0' : '-translate-x-full'} fixed top-[73px] left-0 w-full h-[calc(100vh-73px)] bg-white shadow-xl transition-transform duration-300 sm:hidden z-50`}>
                 <div className="flex flex-col p-6 space-y-6">
-                    <div className="flex items-center gap-2 border px-4 py-2 rounded-full bg-gray-50">
+                    <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 border px-4 py-2 rounded-full bg-gray-50">
                         <Search className="w-4 h-4 text-gray-500" />
                         <input
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            
                             className="w-full bg-transparent outline-none placeholder-gray-500 text-sm"
                             type="text"
                             placeholder="Search products"
                         />
-                    </div>
+                    </form>
 
                     {['/', '/products', '/categories', '/offers'].map((path, index) => (
                         <NavLink
