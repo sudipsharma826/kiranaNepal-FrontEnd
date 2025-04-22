@@ -8,9 +8,9 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate();
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
-  const [showUserLogin, setShowUserlogin] = useState(false);
+  const [showUserLogin, setShowUserLogin] = useState(false); // Fixed typo
   const [menuOpen, setMenuOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
@@ -20,13 +20,13 @@ export const AppProvider = ({ children }) => {
     setProducts(featuredproducts);
   }, []);
 
-const addToCart=(product)=>{
-setCartItems((prev) => ({
-  ...prev,
-  [product.id]: (prev[product.id] || 0) + 1,
-}));
-  toast.success("Added to cart");
-}
+  const addToCart = (product) => {
+    setCartItems((prev) => ({
+      ...prev,
+      [product.id]: (prev[product.id] || 0) + 1,
+    }));
+    toast.success("Added to cart");
+  };
   
   const removeFromCart = (productId) => {
     setCartItems((prev) => {
@@ -48,7 +48,7 @@ setCartItems((prev) => ({
     isSeller,
     setIsSeller,
     showUserLogin,
-    setShowUserlogin,
+    setShowUserLogin,  // Fixed typo here as well
     menuOpen,
     setMenuOpen,
     products,
@@ -56,8 +56,6 @@ setCartItems((prev) => ({
     cartItems,
     addToCart,
     removeFromCart,
-
-
   };
 
   return (

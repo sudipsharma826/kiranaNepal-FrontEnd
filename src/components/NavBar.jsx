@@ -2,9 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { Search, ShoppingCart, User, Menu } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const NavBar = () => {
-    const { user, setUser, setShowUserLogin, navigate, menuOpen, setMenuOpen } = useAppContext();
+    const { user, setUser, setShowUserLogin, navigate, menuOpen, setMenuOpen ,showUserLogin} = useAppContext();
 
     const handleLogout = () => {
         setUser(null);
@@ -12,18 +13,18 @@ const NavBar = () => {
         setMenuOpen(false);
     };
 
-    const toggleMenu = () => {
+    const toggleMenu = (e) => {
         setMenuOpen(!menuOpen);
     };
 
-    const handleLoginClick = () => {
-        setShowUserLogin(true);
-        navigate('/login');
-        setMenuOpen(false);
+    const handleLoginClick = (e) => {
+        e.preventDefault();
+        setShowUserLogin(true); 
+        setMenuOpen(false);     
     };
 
     return (
-        <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-white border-b border-gray-200 shadow-sm transition-all duration-300">
+        <nav className="sticky top-0 z-30 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-white border-b border-gray-200 shadow-sm transition-all duration-300">
             <NavLink to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
                 <img src="/logo.png" alt="Logo" className="w-32 h-15" />
             </NavLink>
@@ -77,8 +78,7 @@ const NavBar = () => {
 
                 {!user ? (
                     <NavLink
-                        to="/login"
-                        onClick={handleLoginClick}
+                        onClick={handleLoginClick} // This triggers the login form visibility
                         className="px-8 py-2.5 bg-indigo-500 hover:bg-indigo-600 transition-colors text-white rounded-full font-medium shadow-md hover:shadow-lg"
                     >
                         Login
@@ -149,8 +149,7 @@ const NavBar = () => {
 
                     {!user ? (
                         <NavLink
-                            to="/login"
-                            onClick={handleLoginClick}
+                            onClick={handleLoginClick} // This triggers the login form visibility
                             className="w-full py-3 bg-indigo-500 hover:bg-indigo-600 transition-colors text-white rounded-lg font-medium text-center"
                         >
                             Login

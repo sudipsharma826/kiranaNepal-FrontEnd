@@ -1,52 +1,119 @@
-import React from 'react';
+import React, { useState } from "react";
 
-const Login = () => {
+const Login = ({ onClose }) => {
+  const [formType, setFormType] = useState("login");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleGoogleLogin = () => {
+    alert("Google login simulated!");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formType === "register") {
+      alert(`Registered:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`);
+    } else {
+      alert(`Logged in with Email: ${email}`);
+    }
+  };
+
+  // This is triggered when clicking outside the form
+  const handleWrapperClick = () => {
+    if (onClose) onClose();
+  };
+
   return (
-    <div className="bg-white text-gray-500 max-w-96 mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
-      <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Welcome back</h2>
-      <form>
-        <input
-          id="email"
-          className="w-full bg-transparent border my-3 border-gray-500/30 outline-none rounded-full py-2.5 px-4"
-          type="email"
-          placeholder="Enter your email"
-          required
-        />
-        <input
-          id="password"
-          className="w-full bg-transparent border mt-1 border-gray-500/30 outline-none rounded-full py-2.5 px-4"
-          type="password"
-          placeholder="Enter your password"
-          required
-        />
-        <div className="text-right py-4">
-          <a className="text-blue-600 underline" href="#">Forgot Password</a>
-        </div>
-        <button
-          type="submit"
-          className="w-full mb-3 bg-indigo-500 hover:bg-indigo-600 transition py-2.5 rounded-full text-white"
-        >
-          Log in
-        </button>
-      </form>
-
-      <p className="text-center mt-4">
-        Don’t have an account?{' '}
-        <a href="/signup" className="text-blue-500 underline">Signup</a>
-      </p>
-
-
-      <button
-        type="button"
-        className="w-full flex items-center gap-2 justify-center my-3 bg-white border border-gray-500/30 py-2.5 rounded-full text-gray-800"
+    <div
+      onClick={handleWrapperClick} 
+      className="fixed top-0 bottom-0 left-0 right-0 z-30 flex items-center justify-center backdrop-blur-sm bg-black/30"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the form
+        className="w-full max-w-sm p-6 bg-white shadow-2xl rounded-xl border border-gray-200 text-sm text-gray-600"
       >
-        <img
-          className="h-4 w-4"
-          src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleFavicon.png"
-          alt="googleFavicon"
-        />
-        Log in with Google
-      </button>
+        <h2 className="text-2xl font-bold text-center text-indigo-500 mb-4">
+          {formType === "login" ? "Login" : "Sign Up"}
+        </h2>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full bg-red-400 hover:bg-red-300 text-white py-2 rounded-md flex items-center justify-center gap-2 mb-4 transition-all"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          Continue with Google
+        </button>
+
+        <div className="flex items-center gap-2 mb-4">
+          <hr className="flex-grow border-t border-gray-300" />
+          <span className="text-sm text-gray-500">OR</span>
+          <hr className="flex-grow border-t border-gray-300" />
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {formType === "register" && (
+            <div>
+              <label className="block text-sm font-medium">Name</label>
+              <input
+                type="text"
+                placeholder="Full name"
+                className="w-full p-2 border border-gray-300 rounded-md outline-indigo-500"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+          )}
+          <div>
+            <label className="block text-sm font-medium">Email</label>
+            <input
+              type="email"
+              placeholder="Email address"
+              className="w-full p-2 border border-gray-300 rounded-md outline-indigo-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full p-2 border border-gray-300 rounded-md outline-indigo-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-indigo-500 hover:bg-indigo-400 text-white py-2 rounded-md transition-all"
+          >
+            {formType === "login" ? "Login" : "Create Account"}
+          </button>
+        </form>
+
+        <p className="mt-4 text-center text-sm text-gray-600">
+          {formType === "login"
+            ? "Don't have an account?"
+            : "Already registered?"}{" "}
+          <span
+            onClick={() =>
+              setFormType(formType === "login" ? "register" : "login")
+            }
+            className="text-indigo-500 cursor-pointer underline"
+          >
+            {formType === "login" ? "Sign Up" : "Login"}
+          </span>
+        </p>
+      </div>
     </div>
   );
 };
