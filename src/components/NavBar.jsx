@@ -54,7 +54,7 @@ const NavBar = () => {
     return (
         <nav className="sticky top-0 z-30 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-white border-b border-gray-200 shadow-sm transition-all duration-300">
             <NavLink to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
-                <img src="/logo.png" alt="Logo" className="w-32 h-10 object-contain" />
+                <img src="/logo.png" alt="Logo" className="w-32 h-20 object-contain" />
             </NavLink>
 
             {/* Desktop Navigation */}

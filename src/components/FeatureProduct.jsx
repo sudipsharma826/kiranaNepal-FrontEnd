@@ -8,7 +8,7 @@ const FeaturedProducts = () => {
   
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-100 py-16 px-6 lg:px-12">
+    <div  className="min-h-screen bg-gradient-to-b from-white to-gray-100 py-16 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
@@ -36,10 +36,13 @@ const FeaturedProducts = () => {
 
             return (
               <div
+                
                 key={product.id}
-                className="bg-white rounded-3xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500"
+                className=" bg-white rounded-3xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div 
+                onClick={() => navigate(`/product/${product.slug}`)}
+                className=" cursor-pointer relative h-64 overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}

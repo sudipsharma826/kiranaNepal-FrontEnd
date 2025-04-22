@@ -10,6 +10,7 @@ const Products = () => {
     addToCart,
     removeFromCart,
     searchQuery,
+    navigate,
   } = useAppContext();
 
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -62,7 +63,9 @@ const Products = () => {
                 key={product.id}
                 className="bg-white rounded-3xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div 
+                onClick={() => navigate(`/product/${product.slug}`)}
+                className=" cursor-pointer relative h-64 overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}

@@ -1,8 +1,10 @@
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import { categories } from '../data';
+import { useAppContext } from '../context/AppContext';
 
 const Categories = () => {
+  const{ navigate } = useAppContext();
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       {/* Header */}
@@ -47,7 +49,11 @@ const Categories = () => {
                 </span>
                 <ChevronRight className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-2 transition-all duration-300" />
               </div>
-              <button className="mt-6 w-full px-6 py-2 bg-white/20 hover:bg-white/30 text-white backdrop-blur-lg rounded-full font-medium text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0">
+              <button 
+              onClick={() => 
+                navigate(`/category/${category.path}`)
+              }
+              className="cursor-pointer mt-6 w-full px-6 py-2 bg-white/20 hover:bg-white/30 text-white backdrop-blur-lg rounded-full font-medium text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0">
                 Explore Category
               </button>
             </div>
