@@ -1,10 +1,22 @@
-import React from 'react'
-import Products from '../components/Product'
+import React from 'react';
+import FeaturedProducts from '../components/FeatureProduct';
+import { useAppContext } from '../context/AppContext';
+import Products from '../components/Products';
+import { useLocation } from 'react-router-dom';
 
-const Product = () => {
+const ProductsPage = () => {
+  const { pathname } = useLocation();
+  const { products } = useAppContext();
+
+  const inHome = pathname === '/';
+  console.log(products);
+
   return (
-    <Products />
-  )
-}
+    <div>
+      {inHome && <FeaturedProducts />}
+      <Products />
+    </div>
+  );
+};
 
-export default Product
+export default ProductsPage;

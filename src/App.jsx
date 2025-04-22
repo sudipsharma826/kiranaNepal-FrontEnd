@@ -13,13 +13,16 @@ import Footer from './components/Footer';
 import SingleProductPage from './pages/ProductPage';
 import ProductPage from './pages/ProductPage';
 import SingleCategoryPage from './pages/SingleCategoryPage';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   // check if the path is seller
   const isSellerPath = useLocation().pathname.includes('seller');
-
+  
   return (
     <>
+    <Toaster position="top-center" autoClose={3000} /> 
+    {/* //To mounted the toaster in the app loaded so that it can be used in any page */}
       <NavBar />
       {/* Routing */}
       <div className={`${isSellerPath ? '' : 'px-6 md:px-16 lg:px-24 xl:px-32'}`}>

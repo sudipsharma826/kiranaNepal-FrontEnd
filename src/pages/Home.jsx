@@ -1,9 +1,9 @@
 import React from 'react'
 import MainBanner from '../components/MainBanner'
 import Categories from '../components/Categories'
-import Products from '../components/Product'
+import FeaturedProducts from '../components/FeatureProduct'
 import Newsletter from '../components/NewsLetter'
-import Footer from '../components/Footer'
+
 
 const Home = () => {
   return (
@@ -12,10 +12,9 @@ const Home = () => {
      <MainBanner />
     </div>
     <Categories />
-    <Products />
+    <FeaturedProducts />
     <Newsletter />
     <div className='mt-12'>
-    <Footer />
     </div>
     </>
   )

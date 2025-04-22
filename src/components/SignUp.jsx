@@ -2,7 +2,7 @@ import React from 'react'
 
 const SignUp = () => {
   return (
-    <form className="bg-white text-gray-500 max-w-[340px] w-full mx-4 md:p-6 p-4 py-8 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10">
+    <form className="bg-white text-gray-500 max-w-[340px] w-full mx-6 md:p-6 p-4 py-1 text-left text-sm rounded-lg shadow-[0px_0px_10px_0px] shadow-black/10">
       <h2 className="text-2xl font-bold mb-9 text-center text-gray-800">Sign Up</h2>
 
       <div className="flex items-center my-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
