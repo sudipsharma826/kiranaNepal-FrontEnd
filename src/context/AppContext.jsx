@@ -10,7 +10,7 @@ export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isSeller, setIsSeller] = useState(false);
-  const [showUserLogin, setShowUserLogin] = useState(false); // Fixed typo
+  const [showUserLogin, setShowUserLogin] = useState(false); 
   const [menuOpen, setMenuOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
@@ -50,7 +50,7 @@ export const AppProvider = ({ children }) => {
     isSeller,
     setIsSeller,
     showUserLogin,
-    setShowUserLogin,  // Fixed typo here as well
+    setShowUserLogin,  
     menuOpen,
     setMenuOpen,
     products,

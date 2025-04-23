@@ -3,7 +3,8 @@ import {
   Laptop, Shirt, ShoppingBag, BedDouble, Smartphone,
   Utensils, Coffee, Pizza, Sandwich, Beef, Fish,
   Salad, IceCream, Soup, Star, ShoppingCart,
-  Heart, ChevronDown, ChevronRight
+  Heart, ChevronDown, ChevronRight,
+  SendToBack
 } from 'lucide-react';
 
 // Categories Data
@@ -122,7 +123,8 @@ export const featuredproducts = [
     reviews: 421,
     image: 'https://images.unsplash.com/photo-1585386959984-a41552263cbd?auto=format&fit=crop&q=80&w=1000',
     description: 'High-quality wireless earbuds with noise cancellation and long battery life.',
-    tags: ['Bestseller', 'New Arrival', 'Tech']
+    tags: ['Bestseller', 'New Arrival', 'Tech'],
+    stock: 50,
   },
   {
     id: 2,
@@ -152,7 +154,7 @@ export const featuredproducts = [
   {
     id: 4,
     name: 'Portable Bluetooth Speaker',
-    category: 'Gadgets',
+    category: 'electronics',
     slug: 'bluetooth-speaker',
     price: 34.99,
     rating: 4.8,
@@ -172,5 +174,17 @@ export const featuredproducts = [
     image: 'https://images.unsplash.com/photo-1621391408629-68ef99df3db5?auto=format&fit=crop&q=80&w=1000',
     description: 'Reusable shopping bag made from organic cotton, available in multiple colors.',
     tags: ['Eco-Friendly', 'Stylish', 'Reusable']
+  },
+  {
+    id: 6,
+    name: 'Smart Fitness Tracker',
+    category: 'Mobile-Phones',
+    slug: 'fitness-tracker',
+    price: 59.99,
+    rating: 4.9,
+    reviews: 512,
+    image: 'https://images.unsplash.com/photo-1585386959984-a41552263cbd?auto=format&fit=crop&q=80&w=1000',
+    description: 'Track your fitness goals with this advanced smartwatch, featuring heart rate monitoring and GPS.',
+    tags: ['Fitness', 'Smart', 'Health']
   }
 ];

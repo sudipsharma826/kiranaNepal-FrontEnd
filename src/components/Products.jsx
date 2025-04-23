@@ -64,7 +64,7 @@ const Products = () => {
                 className="bg-white rounded-3xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500"
               >
                 <div 
-                onClick={() => navigate(`/product/${product.slug}`)}
+                onClick={() => navigate(`/product/${product.category.toLowerCase()}/${product.id}`)}
                 className=" cursor-pointer relative h-64 overflow-hidden">
                   <img
                     src={product.image}

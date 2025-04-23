@@ -118,7 +118,7 @@ const SingleCategory = () => {
         {filteredProducts.map((product) => (
           <Link
             key={product.id}
-            to={`/product/${product.id}`}
+            to={`/product/${product.category.toLowerCase()}/${product.id}`}
             className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow"
           >
             <div className="relative h-48">
