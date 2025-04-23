@@ -43,6 +43,17 @@ export const AppProvider = ({ children }) => {
     toast.success("Removed from cart");
   };
 
+  //Get Cart Items Count
+  const getItemCount = () => {
+    let totalCount=0;
+    for (const key in cartItems) {
+      totalCount += cartItems[key]; // because cartItems is like :
+      // { "productId": quantity, ... }
+      // e.g. { "1": 2, "2": 1 } => totalCount = 2 + 1 = 3
+    }
+    return totalCount;
+  }
+
   const value = {
     navigate,
     user,
@@ -59,7 +70,8 @@ export const AppProvider = ({ children }) => {
     addToCart,
     removeFromCart,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    getItemCount
   };
 
   return (
