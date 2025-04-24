@@ -3,7 +3,7 @@ import MyOrder from '../components/MyOrder'
 
 const MyOrders = () => {
   return (
-    <div>
+    <div className='mt-20'>
         <MyOrder />
     </div>
   )

@@ -43,6 +43,18 @@ export const AppProvider = ({ children }) => {
     toast.success("Removed from cart");
   };
 
+// Remove the entire product from the cart
+const removeWholeProduct = (productId) => {
+  setCartItems((prevItems) => {
+    const updatedCart = { ...prevItems }; // Create a copy of the current cart state
+    delete updatedCart[productId]; // Remove the product by ID
+    return updatedCart; // Return the new cart state
+  });
+
+  toast.success("Product removed from cart.");
+};
+
+
   //Get Cart Items Count
   const getItemCount = () => {
     let totalCount=0;
@@ -53,6 +65,19 @@ export const AppProvider = ({ children }) => {
     }
     return totalCount;
   }
+
+  //Get total amount of cart items
+  const getTotalAmount = () => {
+    let totalAmount = 0;
+    for (const key in cartItems) {
+      const product = products.find((item) => item.id === parseInt(key));
+      if (cartItems[key] >0) {
+        // If product is found in the cart then only add the price
+        totalAmount += product.price * cartItems[key];
+      }
+    }
+    return totalAmount;
+  };
 
   const value = {
     navigate,
@@ -71,7 +96,9 @@ export const AppProvider = ({ children }) => {
     removeFromCart,
     searchQuery,
     setSearchQuery,
-    getItemCount
+    getItemCount,
+    getTotalAmount,
+    removeWholeProduct,
   };
 
   return (

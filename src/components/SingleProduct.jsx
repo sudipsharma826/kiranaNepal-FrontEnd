@@ -39,15 +39,17 @@ function SingleProductPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Breadcrumb */}
       <div className="flex items-center space-x-2 mb-8">
-        <Link to="/" className="text-green-600 hover:text-green-700 flex items-center">
-          <ChevronLeft className="h-5 w-5" />
-          <span>Home</span>
-        </Link>
-        <Link to="/categories" className="text-green-600 hover:text-green-700 flex items-center">
-          <ChevronLeft className="h-5 w-5" />
-          <span>Back to Categories</span>
-        </Link>
-      </div>
+            <Link to="/" className="text-primary hover:text-primary-dull flex items-center">
+                <ChevronLeft className="h-5 w-5" />
+                <span>Home</span>
+              </Link>
+              <Link to="/categories" className="text-primary hover:text-primary-dull flex items-center">
+                <ChevronLeft className="h-5 w-5" />
+                <span>All Categories</span>
+              </Link>
+              <span className="text-gray-400">/</span>
+              <span className="text-gray-600">{productData.name}</span>
+            </div>
 
       {/* Product Details */}
       <div className="bg-white rounded-2xl shadow-md grid grid-cols-1 md:grid-cols-2 gap-8 p-8">

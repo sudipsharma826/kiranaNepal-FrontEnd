@@ -12,7 +12,7 @@ const ProductsPage = () => {
   console.log(products);
 
   return (
-    <div>
+    <div className='mt-20'>
       {inHome && <FeaturedProducts />}
       <Products />
     </div>

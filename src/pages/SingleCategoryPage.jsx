@@ -3,7 +3,7 @@ import SingleCategory from '../components/SingleCategory'
 
 const SingleCategoryPage = () => {
   return (
-    <div>
+    <div className='mt-20'>
         <SingleCategory />
     </div>
   )

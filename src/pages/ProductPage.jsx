@@ -3,7 +3,7 @@ import SingleProductPage from '../components/SingleProduct'
 
 const ProductPage = () => {
   return (
-    <div>
+    <div className='mt-20'>
         < SingleProductPage />
     </div>
   )

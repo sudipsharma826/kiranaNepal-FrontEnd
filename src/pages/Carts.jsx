@@ -3,7 +3,7 @@ import CartPage from '../components/Cart'
 
 const Carts = () => {
   return (
-    <div>
+    <div className='mt-20'>
         <CartPage />
     </div>
   )
