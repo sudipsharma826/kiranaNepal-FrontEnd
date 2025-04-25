@@ -8,7 +8,7 @@ import Newsletter from '../components/NewsLetter'
 const Home = () => {
   return (
     <>
-    <div className='mt-12'>
+    <div className='mt-22'>
      <MainBanner />
     </div>
     <Categories />

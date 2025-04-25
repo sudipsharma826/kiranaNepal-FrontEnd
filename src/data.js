@@ -335,3 +335,60 @@ export const addressdata = [
   '606 Chestnut St, Narayanghat, Nepal',
   '707 Spruce St, Hetauda, Nepal'
 ]
+
+//Epxort order data
+export const orders = [
+  {
+    id: "ORD-2024-001",
+    date: "2024-03-15",
+    total: 45.97,
+    status: "delivered",
+    deliveryDate: "2024-03-18",
+    trackingNumber: "TRK123456789",
+    items: [
+      {
+        id: 1,
+        name: "Organic Bananas",
+        quantity: 2,
+        price: 2.99,
+        image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&q=80&w=600"
+      },
+      {
+        id: 2,
+        name: "Fresh Milk",
+        quantity: 1,
+        price: 3.49,
+        image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=600"
+      }
+    ],
+    timeline: [
+      { status: "Order Placed", date: "2024-03-15 09:00 AM" },
+      { status: "Order Confirmed", date: "2024-03-15 09:30 AM" },
+      { status: "Order Shipped", date: "2024-03-16 10:00 AM" },
+      { status: "Out for Delivery", date: "2024-03-18 08:00 AM" },
+      { status: "Delivered", date: "2024-03-18 02:30 PM" }
+    ]
+  },
+  {
+    id: "ORD-2024-002",
+    date: "2024-03-14",
+    total: 35.98,
+    status: "in-transit",
+    deliveryDate: "2024-03-17",
+    trackingNumber: "TRK987654321",
+    items: [
+      {
+        id: 3,
+        name: "Whole Grain Bread",
+        quantity: 2,
+        price: 4.99,
+        image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&q=80&w=600"
+      }
+    ],
+    timeline: [
+      { status: "Order Placed", date: "2024-03-14 02:00 PM" },
+      { status: "Order Confirmed", date: "2024-03-14 02:30 PM" },
+      { status: "Order Shipped", date: "2024-03-15 11:00 AM" }
+    ]
+  }
+];
