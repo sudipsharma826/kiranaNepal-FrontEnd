@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 import { ArrowBigLeft } from "lucide-react";
 import { addressdata } from "../data";
+import  AddAddress  from "./AddAddress";
 
 const CartPage = () => {
   const {
@@ -153,11 +154,12 @@ const CartPage = () => {
                       </p>
                     ))}
                     <p
-                      onClick={() => navigate("/add-address")}
+                      onClick={() => navigate("/add_address")} 
                       className="px-4 py-2 text-center text-indigo-500 hover:bg-indigo-100 cursor-pointer border-t"
                     >
                       + Add new address
                     </p>
+
                   </div>
                 )}
               </div>

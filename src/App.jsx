@@ -14,6 +14,8 @@ import { Toaster } from 'react-hot-toast';
 import ScrollToTop from './components/ScrollToTop';
 import { useAppContext } from './context/AppContext';
 import Login from './components/Login';
+import AddAddressPage from './pages/AddAddressPage';
+
 
 const App = () => {
   const location = useLocation();
@@ -43,6 +45,7 @@ const App = () => {
           <Route path='/cart' element={<Carts />} />
           <Route path='/product/:category/:id' element={<ProductPage />} />
           <Route path='/category/:category' element={<SingleCategoryPage />} />
+          <Route path="/add_address" element={<AddAddressPage />} />
         </Routes>
       </div>
 
