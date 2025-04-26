@@ -15,12 +15,13 @@ import ScrollToTop from './components/ScrollToTop';
 import { useAppContext } from './context/AppContext';
 import Login from './components/Login';
 import AddAddressPage from './pages/AddAddressPage';
+import SellerLoginPage from './pages/SellerPages/SellerLoginPage';
 
 
 const App = () => {
   const location = useLocation();
   const isSellerPath = location.pathname.includes('seller');
-  const { showUserLogin ,setShowUserLogin} = useAppContext();
+  const { showUserLogin ,setShowUserLogin,isSeller} = useAppContext();
 
   console.log("showUserLogin in App.jsx:", showUserLogin); // Log the state here to check if it's being updated
 
@@ -31,7 +32,7 @@ const App = () => {
       }} />}
       <Toaster position="top-center" reverseOrder={false} />
 
-      <NavBar />
+      {!isSellerPath &&<NavBar /> }
       
       <div className={`${isSellerPath ? '' : 'px-6 md:px-16 lg:px-24 xl:px-32'}`}>
         <ScrollToTop />
@@ -46,10 +47,13 @@ const App = () => {
           <Route path='/product/:category/:id' element={<ProductPage />} />
           <Route path='/category/:category' element={<SingleCategoryPage />} />
           <Route path="/add_address" element={<AddAddressPage />} />
+
+          {/* Seller Routes */}
+          <Route path='/seller' element={isSeller ? null : <SellerLoginPage />} />
         </Routes>
       </div>
 
-      <Footer />
+      {!isSellerPath &&<Footer /> }
     </>
   );
 };
