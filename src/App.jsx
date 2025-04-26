@@ -15,7 +15,11 @@ import ScrollToTop from './components/ScrollToTop';
 import { useAppContext } from './context/AppContext';
 import Login from './components/Login';
 import AddAddressPage from './pages/AddAddressPage';
-import SellerLoginPage from './pages/SellerPages/SellerLoginPage';
+import SellerLogin from './components/SellerComponents/SellerLogin';
+import LayoutSeller from './pages/SellerPages/LayoutSeller';
+import AddProduct from './pages/SellerPages/AddProduct';
+import SellerProduct from './pages/SellerPages/SellerProduct';
+import SellerOrders from './pages/SellerPages/SellerOrders';
 
 
 const App = () => {
@@ -49,7 +53,12 @@ const App = () => {
           <Route path="/add_address" element={<AddAddressPage />} />
 
           {/* Seller Routes */}
-          <Route path='/seller' element={isSeller ? null : <SellerLoginPage />} />
+          <Route path='/seller' element={isSeller ? <LayoutSeller /> : <SellerLogin />} >
+          <Route index element={<AddProduct />} />
+          {/* Default route for /seller */}
+          <Route path='product_list' element={<SellerProduct />} />
+          <Route path='orders' element={<SellerOrders />} />
+          </Route>
         </Routes>
       </div>
 
