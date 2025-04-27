@@ -242,7 +242,8 @@ export const featuredproducts = [
     reviews: 256,
     image: 'https://images.unsplash.com/photo-1587574293340-d0540d6c9a50?auto=format&fit=crop&q=80&w=1000',
     description: 'Compact speaker with powerful sound and waterproof design.',
-    tags: ['Compact', 'Waterproof', 'Outdoor']
+    tags: ['Compact', 'Waterproof', 'Outdoor'],
+    stock: 20
   },
   {
     id: 5,

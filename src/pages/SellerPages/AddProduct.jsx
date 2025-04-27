@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../context/AppContext';
+import { categories } from "../../data";
+
 
 const AddProduct = () => {
+    const {currency} = useAppContext();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -114,11 +118,7 @@ const AddProduct = () => {
             required
           >
             <option value="">Select Category</option>
-            {[
-              { name: 'Electronics' },
-              { name: 'Clothing' },
-              { name: 'Accessories' }
-            ].map((item, index) => (
+            {categories.map((item, index) => (
               <option key={index} value={item.name}>{item.name}</option>
             ))}
           </select>
@@ -128,7 +128,7 @@ const AddProduct = () => {
          and Offer Price */}
         <div className="flex gap-6">
           <div className="flex flex-col gap-2 w-1/2">
-            <label className="text-lg font-medium" htmlFor="productPrice">Product Price ($)</label>
+            <label className="text-lg font-medium" htmlFor="productPrice">Product Price ({currency})</label>
             <input
               id="productPrice"
               type="number"
