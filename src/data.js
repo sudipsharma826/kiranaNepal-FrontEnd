@@ -391,5 +391,27 @@ export const orders = [
       { status: "Order Confirmed", date: "2024-03-14 02:30 PM" },
       { status: "Order Shipped", date: "2024-03-15 11:00 AM" }
     ]
+  },
+  {
+    id: "ORD-2024-006",
+    date: "2024-03-14",
+    total: 100.98,
+    status: "in-transit",
+    deliveryDate: "2024-03-17",
+    trackingNumber: "TRK987659321",
+    items: [
+      {
+        id: 3,
+        name: "Hello",
+        quantity: 2,
+        price: 4.99,
+        image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&q=80&w=600"
+      }
+    ],
+    timeline: [
+      { status: "Order Placed", date: "2024-03-14 02:00 PM" },
+      { status: "Order Confirmed", date: "2024-03-14 02:30 PM" },
+      { status: "Order Shipped", date: "2024-03-15 11:00 AM" }
+    ]
   }
 ];
