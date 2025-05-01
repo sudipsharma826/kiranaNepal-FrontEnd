@@ -1,27 +1,36 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { featuredproducts } from "../data"; 
+import { featuredproducts } from "../data";
 import toast from "react-hot-toast";
+import axios from "axios";
 
+// Create context
 export const AppContext = createContext();
 
+// Provider component
 export const AppProvider = ({ children }) => {
-
   const navigate = useNavigate();
+
+  // State
   const [user, setUser] = useState(null);
   const [isSeller, setIsSeller] = useState(false);
-  const [showUserLogin, setShowUserLogin] = useState(false); 
+  const [showUserLogin, setShowUserLogin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const [searchQuery, setSearchQuery] = useState({});
-  console.log("Search Query:", searchQuery); // Log the search query to check its value
-  const currency = "Rs.";
 
+  // Env variable
+  const currency = import.meta.env.VITE_CURRENCY;
+  console.log("currency in AppContext:", currency);
+
+  // Load products on mount
   useEffect(() => {
     setProducts(featuredproducts);
   }, []);
 
+
+  // Add to cart
   const addToCart = (product) => {
     setCartItems((prev) => ({
       ...prev,
@@ -29,7 +38,8 @@ export const AppProvider = ({ children }) => {
     }));
     toast.success("Added to cart");
   };
-  
+
+  // Remove one from cart
   const removeFromCart = (productId) => {
     setCartItems((prev) => {
       const updated = { ...prev };
@@ -43,42 +53,30 @@ export const AppProvider = ({ children }) => {
     toast.success("Removed from cart");
   };
 
-// Remove the entire product from the cart
-const removeWholeProduct = (productId) => {
-  setCartItems((prevItems) => {
-    const updatedCart = { ...prevItems }; // Create a copy of the current cart state
-    delete updatedCart[productId]; // Remove the product by ID
-    return updatedCart; // Return the new cart state
-  });
-
-  toast.success("Product removed from cart.");
-};
-
-
-  //Get Cart Items Count
-  const getItemCount = () => {
-    let totalCount=0;
-    for (const key in cartItems) {
-      totalCount += cartItems[key]; // because cartItems is like :
-      // { "productId": quantity, ... }
-      // e.g. { "1": 2, "2": 1 } => totalCount = 2 + 1 = 3
-    }
-    return totalCount;
-  }
-
-  //Get total amount of cart items
-  const getTotalAmount = () => {
-    let totalAmount = 0;
-    for (const key in cartItems) {
-      const product = products.find((item) => item.id === parseInt(key));
-      if (cartItems[key] >0) {
-        // If product is found in the cart then only add the price
-        totalAmount += product.price * cartItems[key];
-      }
-    }
-    return totalAmount;
+  // Remove entire product from cart
+  const removeWholeProduct = (productId) => {
+    setCartItems((prevItems) => {
+      const updatedCart = { ...prevItems };
+      delete updatedCart[productId];
+      return updatedCart;
+    });
+    toast.success("Product removed from cart.");
   };
 
+  // Get total item count in cart
+  const getItemCount = () => {
+    return Object.values(cartItems).reduce((total, count) => total + count, 0);
+  };
+
+  // Get total price of cart
+  const getTotalAmount = () => {
+    return Object.keys(cartItems).reduce((total, key) => {
+      const product = products.find((item) => item.id === parseInt(key));
+      return product ? total + product.price * cartItems[key] : total;
+    }, 0);
+  };
+
+  // Context value
   const value = {
     navigate,
     user,
@@ -86,7 +84,7 @@ const removeWholeProduct = (productId) => {
     isSeller,
     setIsSeller,
     showUserLogin,
-    setShowUserLogin,  
+    setShowUserLogin,
     menuOpen,
     setMenuOpen,
     products,
@@ -94,18 +92,16 @@ const removeWholeProduct = (productId) => {
     cartItems,
     addToCart,
     removeFromCart,
+    removeWholeProduct,
     searchQuery,
     setSearchQuery,
     getItemCount,
     getTotalAmount,
-    removeWholeProduct,
+    axios, // optional if you're injecting globally
   };
 
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
+// Hook to use context
 export const useAppContext = () => useContext(AppContext);
