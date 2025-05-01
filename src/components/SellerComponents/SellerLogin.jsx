@@ -3,24 +3,40 @@ import toast from 'react-hot-toast';
 import { useAppContext } from '../../context/AppContext';
 
 const SellerLogin = () => {
-    const {isSeller,setIsSeller , navigate} = useAppContext();
+    const {isSeller,setIsSeller , navigate ,axios} = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
 
   useEffect(() => {
     if (isSeller) {
-        navigate('/seller_dashboard'); // Redirect to seller dashboard if already logged in
+        navigate('/seller'); // Redirect to seller dashboard if already logged in
     }
     }, [isSeller]);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-   toast.success('Login successful!');
-   setIsSeller(true);
-  };
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+        console.log(email, password);
+        const response = await axios.post('/api/seller/login', { email, password });
+        const { message,data} = response?.data;
+    
+        if (response.data.success) {
+          setIsSeller(true);
+          toast.success(message);
+          navigate('/seller');
+        }
+      } catch(error) {
+        const message = error.response?.data?.message;
+        console.log(message);
+        if (error.response && error.response.status === 401) {  
+          toast.error(message);
+        } else if (error.response && error.response.status === 500) {
+          toast.error("Internal server error. Please try again later.");
+        }
+      }
+    };
+    
 
   return !isSeller && ( // Render the login form only if isSeller is false
     <div className="min-h-screen flex items-center justify-center">

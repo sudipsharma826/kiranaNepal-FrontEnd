@@ -1,112 +1,122 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { featuredproducts } from "../data";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+// Set the url and cookies for axios globally
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
-//Set the url and cookies for axios globally
-axios.defaults.withCredentials = true; // Enable withCredentials for all requests
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;// Set the base URL for all requests
-
-// Create context
 export const AppContext = createContext();
 
-// Provider component
 export const AppProvider = ({ children }) => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-  // State
-  const [user, setUser] = useState(null);
-  const [isSeller, setIsSeller] = useState(false);
-  const [showUserLogin, setShowUserLogin] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [cartItems, setCartItems] = useState({});
-  const [searchQuery, setSearchQuery] = useState({});
+    const [user, setUser] = useState(null);
+    const [isSeller, setIsSeller] = useState(false);
+    const [showUserLogin, setShowUserLogin] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [cartItems, setCartItems] = useState({});
+    const [searchQuery, setSearchQuery] = useState({});
 
-  // Env variable
-  const currency = import.meta.env.VITE_CURRENCY;
-  console.log("currency in AppContext:", currency);
+    const currency = import.meta.env.VITE_CURRENCY;
 
-  // Load products on mount
-  useEffect(() => {
-    setProducts(featuredproducts);
-  }, []);
+    const addToCart = (product) => {
+        setCartItems((prev) => ({
+            ...prev,
+            [product.id]: (prev[product.id] || 0) + 1,
+        }));
+        toast.success("Added to cart");
+    };
 
+    const removeFromCart = (productId) => {
+        setCartItems((prev) => {
+            const updated = { ...prev };
+            if (updated[productId] > 1) {
+                updated[productId] -= 1;
+            } else {
+                delete updated[productId];
+            }
+            return updated;
+        });
+        toast.success("Removed from cart");
+    };
 
-  // Add to cart
-  const addToCart = (product) => {
-    setCartItems((prev) => ({
-      ...prev,
-      [product.id]: (prev[product.id] || 0) + 1,
-    }));
-    toast.success("Added to cart");
-  };
+    const removeWholeProduct = (productId) => {
+        setCartItems((prevItems) => {
+            const updatedCart = { ...prevItems };
+            delete updatedCart[productId];
+            return updatedCart;
+        });
+        toast.success("Product removed from cart.");
+    };
 
-  // Remove one from cart
-  const removeFromCart = (productId) => {
-    setCartItems((prev) => {
-      const updated = { ...prev };
-      if (updated[productId] > 1) {
-        updated[productId] -= 1;
-      } else {
-        delete updated[productId];
-      }
-      return updated;
-    });
-    toast.success("Removed from cart");
-  };
+    const getItemCount = () => {
+        return Object.values(cartItems).reduce((total, count) => total + count, 0);
+    };
 
-  // Remove entire product from cart
-  const removeWholeProduct = (productId) => {
-    setCartItems((prevItems) => {
-      const updatedCart = { ...prevItems };
-      delete updatedCart[productId];
-      return updatedCart;
-    });
-    toast.success("Product removed from cart.");
-  };
+    const getTotalAmount = () => {
+        return Object.keys(cartItems).reduce((total, key) => {
+            const product = products.find((item) => item.id === parseInt(key));
+            return product ? total + product.price * cartItems[key] : total;
+        }, 0);
+    };
 
-  // Get total item count in cart
-  const getItemCount = () => {
-    return Object.values(cartItems).reduce((total, count) => total + count, 0);
-  };
+    const checkSellerLogin = async () => {
+        try {
+            const response = await axios.get("/api/seller/checkSeller");
+            if (response.data.success) {
+                setIsSeller(true);
+                toast.success(response?.data.message);
+            }
+        } catch (error) {
+            const message = error.response?.data?.message;
+            if (error.response && error.response.status === 401) {
+                setIsSeller(false);
+                toast.error(message);
+            } else if (error.response && error.response.status === 500) {
+                toast.error("Internal server error. Please try again later.");
+            }
+        }
+    };
 
-  // Get total price of cart
-  const getTotalAmount = () => {
-    return Object.keys(cartItems).reduce((total, key) => {
-      const product = products.find((item) => item.id === parseInt(key));
-      return product ? total + product.price * cartItems[key] : total;
-    }, 0);
-  };
+    useEffect(() => {
+        setProducts(featuredproducts);
+    }, []);
 
-  // Context value
-  const value = {
-    navigate,
-    user,
-    setUser,
-    isSeller,
-    setIsSeller,
-    showUserLogin,
-    setShowUserLogin,
-    menuOpen,
-    setMenuOpen,
-    products,
-    currency,
-    cartItems,
-    addToCart,
-    removeFromCart,
-    removeWholeProduct,
-    searchQuery,
-    setSearchQuery,
-    getItemCount,
-    getTotalAmount,
-    axios, // optional if you're injecting globally
-  };
+    useEffect(() => {
+        if (location.pathname=== "/seller") {
+            checkSellerLogin();
+        }
+    }, [location.pathname]);
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+    const value = {
+        navigate,
+        user,
+        setUser,
+        isSeller,
+        setIsSeller,
+        showUserLogin,
+        setShowUserLogin,
+        menuOpen,
+        setMenuOpen,
+        products,
+        currency,
+        cartItems,
+        addToCart,
+        removeFromCart,
+        removeWholeProduct,
+        searchQuery,
+        setSearchQuery,
+        getItemCount,
+        getTotalAmount,
+        axios,
+    };
+
+    return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-// Hook to use context
 export const useAppContext = () => useContext(AppContext);

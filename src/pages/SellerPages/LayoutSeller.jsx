@@ -1,9 +1,10 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import React from "react";
+import toast from "react-hot-toast";
 
 const LayoutSeller = () => {
-  const { setIsSeller, setUser } = useAppContext();
+  const { setIsSeller, setUser,navigate ,axios} = useAppContext();
 
   const dashboardicon = (
     <svg className="w-6 h-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -29,10 +30,26 @@ const LayoutSeller = () => {
     { name: "Orders", path: "/seller/orders", icon: chaticon },
   ];
 
-  const logout = () => {
-    setIsSeller(false);
-    setUser(null);
+// Handle logout
+  const handleLogOut = async () => {
+    try {
+      const response = await axios.get("/api/seller/logout", { withCredentials: true });
+      const { message } = response.data;
+      if (response.data.success) {
+        setIsSeller(false);
+        setUser(null);
+        toast.success(message);
+      }
+    } catch (error) {
+      const message = error.response?.data?.message;
+      if(error.response && error.response.status === 401) {
+        toast.error(message);
+      } else {
+      toast.error("Logout failed. Please try again.");
+      }
+    }
   };
+  
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -53,7 +70,7 @@ const LayoutSeller = () => {
         <div className="flex items-center gap-4 text-gray-600">
           <p className="text-sm md:text-base">Hi, Admin</p>
           <button
-            onClick={logout}
+            onClick={handleLogOut}
             className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm hover:brightness-110 transition-all duration-300"
           >
             Logout
