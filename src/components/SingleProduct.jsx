@@ -5,7 +5,7 @@ import { useAppContext } from '../context/AppContext';
 
 function SingleProductPage() {
   const { id } = useParams();
-  const { products, addToCart, removeFromCart, cartItems } = useAppContext();
+  const { products, addToCart, removeFromCart, cartItems,currency } = useAppContext();
   const productData = products.find((product) => String(product.id) === String(id));
 
   const [quantity, setQuantity] = useState(0);
@@ -83,7 +83,7 @@ function SingleProductPage() {
 
           <p className="text-gray-700 leading-relaxed">{productData.description}</p>
 
-          <div className="text-3xl font-bold text-gray-900">${productData.price.toFixed(2)}</div>
+          <div className="text-3xl font-bold text-gray-900">{currency}{productData.price.toFixed(2)}</div>
 
           {/* Quantity Selector */}
           <div className="flex items-center space-x-4">
@@ -143,7 +143,7 @@ function SingleProductPage() {
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
                   <p className="text-sm text-gray-500 mt-1">{product.category}</p>
-                  <div className="mt-2 font-bold text-green-700">${product.price.toFixed(2)}</div>
+                  <div className="mt-2 font-bold text-green-700">{currency}{product.price.toFixed(2)}</div>
                 </div>
               </Link>
             ))}

@@ -4,6 +4,11 @@ import { featuredproducts } from "../data";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+
+//Set the url and cookies for axios globally
+axios.defaults.withCredentials = true; // Enable withCredentials for all requests
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;// Set the base URL for all requests
+
 // Create context
 export const AppContext = createContext();
 
