@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { featuredproducts } from "../data";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -12,7 +11,6 @@ export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [user, setUser] = useState(null);
     const [isSeller, setIsSeller] = useState(false);
@@ -21,6 +19,7 @@ export const AppProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState({});
+    const [categories, setCategories] = useState([]);
 
     const currency = import.meta.env.VITE_CURRENCY;
 
@@ -60,7 +59,7 @@ export const AppProvider = ({ children }) => {
 
     const getTotalAmount = () => {
         return Object.keys(cartItems).reduce((total, key) => {
-            const product = products.find((item) => item.id === parseInt(key));
+            const product = products.find((item) => item.id === key || item.id === parseInt(key));
             return product ? total + product.price * cartItems[key] : total;
         }, 0);
     };
@@ -70,28 +69,53 @@ export const AppProvider = ({ children }) => {
             const response = await axios.get("/api/seller/checkSeller");
             if (response.data.success) {
                 setIsSeller(true);
-                toast.success(response?.data.message);
             }
         } catch (error) {
-            const message = error.response?.data?.message;
             if (error.response && error.response.status === 401) {
                 setIsSeller(false);
-                toast.error(message);
             } else if (error.response && error.response.status === 500) {
                 toast.error("Internal server error. Please try again later.");
             }
         }
     };
 
-    useEffect(() => {
-        setProducts(featuredproducts);
-    }, []);
+    // Fetch Products from the backend and map _id to id
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get("/api/product/get_products");
+            if (response.data.success) {
+                const normalizedProducts = response.data.data.map((product) => ({
+                    ...product,
+                    id: product._id, // map _id to id for frontend use
+                }));
+                setProducts(normalizedProducts);
+            } else {
+                toast.error("Failed to fetch products.");
+            }
+        } catch (error) {
+            toast.error("Error fetching products.");
+        }
+    };
+
+    // Fetch the categories from the backend
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get("/api/category/get_categories");
+            if (response.data.success) {
+                setCategories(response.data.data);
+            } else {
+                toast.error("Failed to fetch categories.");
+            }
+        } catch (error) {
+            toast.error("Error fetching categories.");
+        }
+    };
 
     useEffect(() => {
-        if (location.pathname=== "/seller") {
-            checkSellerLogin();
-        }
-    }, [location.pathname]);
+        fetchCategories();
+        fetchProducts();
+        checkSellerLogin();
+    }, []);
 
     const value = {
         navigate,
@@ -114,6 +138,7 @@ export const AppProvider = ({ children }) => {
         getItemCount,
         getTotalAmount,
         axios,
+        categories,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -49,14 +49,14 @@ const App = () => {
           <Route path='/orders' element={<MyOrders />} />
           <Route path='/cart' element={<Carts />} />
           <Route path='/product/:category/:id' element={<ProductPage />} />
-          <Route path='/category/:category' element={<SingleCategoryPage />} />
+          <Route path='/category/:category/:id' element={<SingleCategoryPage />} />
           <Route path="/add_address" element={<AddAddressPage />} />
 
           {/* Seller Routes */}
           <Route path='/seller' element={isSeller ? <LayoutSeller /> : <SellerLogin />} >
-          <Route index element={<AddProduct />} />
+          <Route index element={<SellerProduct />} />
           {/* Default route for /seller */}
-          <Route path='product_list' element={<SellerProduct />} />
+          <Route path='add_product' element={<AddProduct />} />
           <Route path='orders' element={<SellerOrders />} />
           </Route>
         </Routes>

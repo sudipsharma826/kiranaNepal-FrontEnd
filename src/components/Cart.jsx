@@ -23,7 +23,7 @@ const CartPage = () => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   const cartProducts = products.filter(
-    (product) => cartItems[product.id] && cartItems[product.id] > 0
+    (product) => cartItems[product._id] && cartItems[product._id] > 0
   );
 
   const shippingFee = getTotalAmount() > 1000 ? 0 : 20;
@@ -65,10 +65,10 @@ const CartPage = () => {
             </div>
 
             {cartProducts.map((product) => {
-              const inCart = cartItems[product.id] || 0;
+              const inCart = cartItems[product._id] || 0;
               return (
                 <div
-                  key={product.id}
+                  key={product._id}
                   className="grid grid-cols-[2fr_1fr_1fr] items-center py-5 border-b"
                 >
                   <div className="flex items-center gap-4">
@@ -84,7 +84,7 @@ const CartPage = () => {
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-gray-500 text-sm">Qty:</span>
                         <div className="flex gap-2 bg-gray-200 rounded-full px-4 py-1 items-center">
-                          <button onClick={() => removeFromCart(product.id)} className="text-xl font-bold text-indigo-600">-</button>
+                          <button onClick={() => removeFromCart(product._id)} className="text-xl font-bold text-indigo-600">-</button>
                           <span className="text-center font-semibold text-gray-700">{inCart}</span>
                           <button onClick={() => addToCart(product)} className="text-xl font-bold text-indigo-600">+</button>
                         </div>
@@ -95,7 +95,7 @@ const CartPage = () => {
                     {currency}{(product.price * inCart).toFixed(2)}
                   </p>
                   <button 
-                    onClick={() => removeWholeProduct(product.id)}
+                    onClick={() => removeWholeProduct(product._id)}
                     className="text-center mx-auto p-2 hover:text-red-600"
                   >
                     <svg width="20" height="20" fill="none" viewBox="0 0 20 20">

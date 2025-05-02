@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Filter, ChevronLeft } from 'lucide-react';
 import { categories } from '../data';
-import { useAppContext } from '../context/AppContext'; // <-- Make sure this path is correct
+import { useAppContext } from '../context/AppContext'; 
 
 const SingleCategory = () => {
-  const { products } = useAppContext(); // Getting all products
-  const { category } = useParams(); // From route: /category/:category
+  const { products ,currency} = useAppContext(); 
+  const { category } = useParams(); 
 
   // Find the category data from the static list
   const categoryData = categories.find((item) =>
@@ -145,7 +145,7 @@ const SingleCategory = () => {
                 </div>
                 <span className="text-sm text-gray-500 ml-2">({product.reviews})</span>
               </div>
-              <p className="text-lg font-bold text-gray-900 mt-2">${product.price.toFixed(2)}</p>
+              <p className="text-lg font-bold text-gray-900 mt-2">{currency}{product.price}</p>
             </div>
           </Link>
         ))}

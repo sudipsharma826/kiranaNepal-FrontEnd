@@ -25,8 +25,7 @@ const LayoutSeller = () => {
   );
 
   const sidebarLinks = [
-    { name: "Add Product", path: "/seller", icon: dashboardicon },
-    { name: "Product List", path: "/seller/product_list", icon: overviewicon },
+    { name: "Product List", path: "/seller", icon: overviewicon },
     { name: "Orders", path: "/seller/orders", icon: chaticon },
   ];
 
