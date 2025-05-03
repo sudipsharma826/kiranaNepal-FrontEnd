@@ -86,6 +86,7 @@ export const AppProvider = ({ children }) => {
             if(response.data.success) {
                 console.log("User logged in successfully:", response.data.data);
                 setUser({
+                    id: response.data.data._id,
                     name: response.data.data.name,
                     email: response.data.data.email,
                     image: response.data.data.image,
@@ -168,6 +169,7 @@ export const AppProvider = ({ children }) => {
         categories,
         fetchProducts,
         fetchCategories,
+        setCartItems,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

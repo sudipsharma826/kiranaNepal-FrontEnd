@@ -118,6 +118,10 @@ const SellerCategories = () => {
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   // Category Form Component
   const CategoryForm = ({ category, onSubmit, onCancel }) => {
     const [formData, setFormData] = useState({
