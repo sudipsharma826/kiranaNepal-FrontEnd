@@ -4,7 +4,7 @@ import { loginWithGoogle } from "../firbaseConfiguration ";
 import toast from "react-hot-toast";
 
 const Login = ({ onClose }) => {
-  const { setUser, setShowUserLogin, axios, navigate } = useAppContext();
+  const { setUser, setShowUserLogin, axios } = useAppContext();
   const [formType, setFormType] = useState("login");
 
   const [name, setName] = useState("");
@@ -95,19 +95,19 @@ const Login = ({ onClose }) => {
   return (
     <div
       onClick={handleWrapperClick}
-      className="fixed top-0 bottom-0 left-0 right-0 z-30 flex items-center justify-center backdrop-blur-sm bg-black/30"
+      className="fixed inset-0 z-30 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-sm p-6 bg-white shadow-2xl rounded-2xl border border-gray-200 text-sm text-gray-600"
+        className="w-full max-w-sm bg-white shadow-2xl rounded-2xl border border-gray-200 text-sm text-gray-600 flex flex-col max-h-full overflow-y-auto p-6"
       >
-        <h2 className="text-3xl font-bold text-center text-indigo-500 mb-4">
+        <h2 className="text-3xl font-bold text-center text-indigo-600 mb-4">
           {formType === "login" ? "Login" : "Sign Up"}
         </h2>
 
         <button
           onClick={handleGoogleLogin}
-          className="w-full bg-red-500 hover:bg-red-400 text-white py-2 rounded-lg flex items-center justify-center gap-2 mb-4 transition-all"
+          className="w-full bg-red-500 hover:bg-red-400 text-white py-2 rounded-lg flex items-center justify-center gap-2 mb-4 transition"
         >
           <img
             src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
@@ -127,11 +127,14 @@ const Login = ({ onClose }) => {
           {formType === "register" && (
             <>
               <div>
-                <label className="block text-sm font-medium">Name</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="name">
+                  Full Name
+                </label>
                 <input
+                  id="name"
                   type="text"
                   placeholder="Full name"
-                  className="w-full p-2 border border-gray-300 rounded-lg outline-indigo-500"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-indigo-500"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -139,11 +142,14 @@ const Login = ({ onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium">Phone Number</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="phone">
+                  Phone Number
+                </label>
                 <input
+                  id="phone"
                   type="tel"
                   placeholder="Phone number"
-                  className="w-full p-2 border border-gray-300 rounded-lg outline-indigo-500"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-indigo-500"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
@@ -179,11 +185,14 @@ const Login = ({ onClose }) => {
           )}
 
           <div>
-            <label className="block text-sm font-medium">Email</label>
+            <label className="block text-sm font-medium mb-1" htmlFor="email">
+              Email
+            </label>
             <input
+              id="email"
               type="email"
               placeholder="Email address"
-              className="w-full p-2 border border-gray-300 rounded-lg outline-indigo-500"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-indigo-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -191,11 +200,14 @@ const Login = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Password</label>
+            <label className="block text-sm font-medium mb-1" htmlFor="password">
+              Password
+            </label>
             <input
+              id="password"
               type="password"
               placeholder="Password"
-              className="w-full p-2 border border-gray-300 rounded-lg outline-indigo-500"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-indigo-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -204,7 +216,7 @@ const Login = ({ onClose }) => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-400 text-white py-2 rounded-lg transition-all"
+            className="w-full bg-indigo-500 hover:bg-indigo-400 text-white py-2 rounded-lg transition"
           >
             {formType === "login" ? "Login" : "Create Account"}
           </button>

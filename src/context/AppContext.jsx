@@ -79,6 +79,30 @@ export const AppProvider = ({ children }) => {
         }
     };
 
+    //Check if the user is logged in
+    const checkUserLogin = async () => {
+        try {
+            const response = await axios.get("/api/user/isAuth");
+            if(response.data.success) {
+                console.log("User logged in successfully:", response.data.data);
+                setUser({
+                    name: response.data.data.name,
+                    email: response.data.data.email,
+                    image: response.data.data.image,
+                    phone: response.data.data.phone
+                });
+            }else{
+                setUser(null);
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                setUser(null);
+            } else if (error.response && error.response.status === 500) {
+                toast.error("Internal server error. Please try again later.");
+            }
+        }
+    };
+
     // Fetch Products from the backend and map _id to id
     const fetchProducts = async () => {
         try {
@@ -117,6 +141,7 @@ export const AppProvider = ({ children }) => {
         fetchCategories();
         fetchProducts();
         checkSellerLogin();
+        checkUserLogin();
     }, []);
 
     const value = {

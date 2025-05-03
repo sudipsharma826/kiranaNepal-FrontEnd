@@ -99,10 +99,7 @@ const SellerProduct = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  useEffect(() => {
-    fetchProducts(); 
-
-  }, [handleDeleteClick,handleEditClick,handleEditSubmit]); // Fetch products when the component mounts or when the edit/delete product state changes
+  
 
   return (
     <div className="flex-1 flex flex-col px-4 md:px-10 py-6 bg-gray-50 min-h-screen">
