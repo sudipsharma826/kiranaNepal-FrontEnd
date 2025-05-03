@@ -20,6 +20,8 @@ import LayoutSeller from './pages/SellerPages/LayoutSeller';
 import AddProduct from './pages/SellerPages/AddProduct';
 import SellerProduct from './pages/SellerPages/SellerProduct';
 import SellerOrders from './pages/SellerPages/SellerOrders';
+import SellerCategories from './pages/SellerPages/SellerCategories';
+
 
 
 const App = () => {
@@ -49,7 +51,7 @@ const App = () => {
           <Route path='/orders' element={<MyOrders />} />
           <Route path='/cart' element={<Carts />} />
           <Route path='/product/:category/:id' element={<ProductPage />} />
-          <Route path='/category/:category/:id' element={<SingleCategoryPage />} />
+          <Route path='/category/:category/' element={<SingleCategoryPage />} />
           <Route path="/add_address" element={<AddAddressPage />} />
 
           {/* Seller Routes */}
@@ -58,6 +60,7 @@ const App = () => {
           {/* Default route for /seller */}
           <Route path='add_product' element={<AddProduct />} />
           <Route path='orders' element={<SellerOrders />} />
+          <Route path='categories' element={<SellerCategories />} />
           </Route>
         </Routes>
       </div>

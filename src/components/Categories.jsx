@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { categories } from '../data';
 import { useAppContext } from '../context/AppContext';
 
 const Categories = () => {
-  const{ navigate } = useAppContext();
+  const { navigate, categories, fetchCategories } = useAppContext();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       {/* Header */}
@@ -21,41 +25,46 @@ const Categories = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {categories.map((category) => (
           <div
-            key={category.id}
-            className="group relative overflow-hidden rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-white"
+            key={category._id}
+            className="group relative overflow-hidden rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-gray-900"
           >
-            {/* Background Image with Gradient */}
+            {/* Background Image with Dark Overlay */}
             <div className="absolute inset-0 z-0">
               <img
                 src={category.image}
                 alt={category.name}
                 className="w-full h-full object-cover"
               />
-              <div className={`absolute inset-0 ${category.color} bg-gradient-to-br opacity-80 group-hover:opacity-90 transition-opacity duration-300`}></div>
+              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/70 transition-opacity duration-300"></div>
             </div>
 
             {/* Content */}
             <div className="relative z-10 p-6 md:p-8 flex flex-col justify-between h-full">
               <div>
-                <category.icon className="w-10 h-10 text-white mb-4" />
-                <h3 className="text-2xl font-bold text-white">{category.name}</h3>
+                <div className="flex items-center mb-4">
+                  <img
+                    src={category.icon}
+                    alt="Category Icon"
+                    className="w-10 h-10 rounded-full border-2 border-white mr-3"
+                  />
+                  <h3 className="text-2xl font-bold text-white">{category.name}</h3>
+                </div>
                 <p className="text-white/90 mt-2 text-sm leading-relaxed">
-                  {category.description}
+                  {category.description || 'No description available.'}
+                </p>
+                <p className="text-white/70 mt-2 text-xs">
+                  Total Products: <span className="font-semibold">{category.totalproducts}</span>
                 </p>
               </div>
               <div className="flex justify-between items-center mt-6">
-                <span className="text-white text-sm font-light">
-                  {category.items} items
-                </span>
-                <ChevronRight className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-2 transition-all duration-300" />
+                <button
+                  onClick={() => navigate(`/category/${category.slug}`)}
+                  className="cursor-pointer w-full px-6 py-2 bg-white/20 hover:bg-white/30 text-white backdrop-blur-lg rounded-full font-medium text-sm transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
+                >
+                  Explore Category
+                </button>
+                <ChevronRight className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-2 transition-all duration-300 ml-2" />
               </div>
-              <button 
-              onClick={() => 
-                navigate(`/category/${category.path}`)
-              }
-              className="cursor-pointer mt-6 w-full px-6 py-2 bg-white/20 hover:bg-white/30 text-white backdrop-blur-lg rounded-full font-medium text-sm transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0">
-                Explore Category
-              </button>
             </div>
           </div>
         ))}

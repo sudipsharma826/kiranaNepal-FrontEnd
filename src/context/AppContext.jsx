@@ -86,7 +86,7 @@ export const AppProvider = ({ children }) => {
             if (response.data.success) {
                 const normalizedProducts = response.data.data.map((product) => ({
                     ...product,
-                    id: product._id, // map _id to id for frontend use
+                    id: product._id, 
                 }));
                 setProducts(normalizedProducts);
             } else {
@@ -96,13 +96,15 @@ export const AppProvider = ({ children }) => {
             toast.error("Error fetching products.");
         }
     };
+    console.log("Products fetched successfully:", products);
 
     // Fetch the categories from the backend
     const fetchCategories = async () => {
         try {
-            const response = await axios.get("/api/category/get_categories");
+            const response = await axios.get("/api/category/get_category_public");
             if (response.data.success) {
                 setCategories(response.data.data);
+                console.log("Categories fetched successfully:", response.data.data);
             } else {
                 toast.error("Failed to fetch categories.");
             }
@@ -139,6 +141,8 @@ export const AppProvider = ({ children }) => {
         getTotalAmount,
         axios,
         categories,
+        fetchProducts,
+        fetchCategories,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
