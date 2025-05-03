@@ -22,6 +22,8 @@ const NavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
+  console.log('User:', user);
+
   const handleLogout = async () => {
     try {
       const response = await axios.get('/api/user/logout');

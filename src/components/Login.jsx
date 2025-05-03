@@ -17,8 +17,8 @@ const Login = ({ onClose }) => {
   const handleGoogleLogin = async () => {
     try {
       const googleUser = await loginWithGoogle();
-
-      const { email, displayName, photoURL, phoneNumber } = googleUser.providerData[0];
+      const { email, displayName, photoURL, phoneNumber } =
+        googleUser.providerData[0] || {};
 
       const { data } = await axios.post("/api/user/googleLogin", {
         email,
@@ -88,8 +88,10 @@ const Login = ({ onClose }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setImage(file);
-    setImagePreview(URL.createObjectURL(file));
+    if (file) {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   return (
@@ -127,7 +129,10 @@ const Login = ({ onClose }) => {
           {formType === "register" && (
             <>
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="name">
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="name"
+                >
                   Full Name
                 </label>
                 <input
@@ -142,7 +147,10 @@ const Login = ({ onClose }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="phone">
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="phone"
+                >
                   Phone Number
                 </label>
                 <input
@@ -156,36 +164,36 @@ const Login = ({ onClose }) => {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-1">Profile Photo</label>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full overflow-hidden">
-                    {imagePreview ? (
-                      <img
-                        src={imagePreview}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                        No Image
-                      </div>
-                    )}
-                  </div>
+              <div className="flex flex-col items-center gap-3">
+                <p className="text-lg font-semibold text-gray-700">
+                  Profile Photo
+                </p>
+                <label className="cursor-pointer">
                   <input
+                    accept="image/*"
                     type="file"
                     name="image"
-                    accept="image/*"
+                    hidden
                     onChange={handleImageChange}
-                    className="text-sm"
                   />
-                </div>
+                  <img
+                    src={
+                      imagePreview ||
+                      "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/uploadArea.png"
+                    }
+                    alt="Upload Preview"
+                    className="w-32 h-32 object-cover rounded-lg border-2 border-dashed border-gray-400 hover:border-indigo-400 transition"
+                  />
+                </label>
               </div>
             </>
           )}
 
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="email">
+            <label
+              className="block text-sm font-medium mb-1"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
@@ -200,7 +208,10 @@ const Login = ({ onClose }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1" htmlFor="password">
+            <label
+              className="block text-sm font-medium mb-1"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -223,9 +234,13 @@ const Login = ({ onClose }) => {
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          {formType === "login" ? "Don't have an account?" : "Already registered?"}{" "}
+          {formType === "login"
+            ? "Don't have an account?"
+            : "Already registered?"}{" "}
           <span
-            onClick={() => setFormType(formType === "login" ? "register" : "login")}
+            onClick={() =>
+              setFormType(formType === "login" ? "register" : "login")
+            }
             className="text-indigo-500 cursor-pointer underline"
           >
             {formType === "login" ? "Sign Up" : "Login"}
