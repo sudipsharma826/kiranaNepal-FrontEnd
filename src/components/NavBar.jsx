@@ -15,6 +15,7 @@ const NavBar = () => {
     searchQuery,
     getItemCount
   } = useAppContext();
+  console.log(user);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -139,7 +140,11 @@ const NavBar = () => {
               onClick={() => setShowDropdown(!showDropdown)}
               className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
             >
+              {user?.image ? (
+                <img src={user.image} alt={user.name} className="w-full h-full rounded-full" />
+              ) : (
               <User className="w-5 h-5 text-gray-600" />
+              )}
             </button>
             {showDropdown && (
               <ul className="absolute top-12 right-0 bg-white shadow-md border rounded-lg w-48 py-2 text-sm z-50 animate-fade-in">
@@ -148,7 +153,7 @@ const NavBar = () => {
                 onClick={()=> navigate('/orders')}
                  className="px-4 py-2 hover:bg-gray-50">My Orders</li>
                 <li
-                  className="px-4 py-2 text-red-500 hover:bg-gray-50 border-t mt-1"
+                  className=" cursor-pointer px-4 py-2 text-red-500 hover:bg-gray-50 border-t mt-1"
                   onClick={handleLogout}
                 >
                   Logout
@@ -190,7 +195,11 @@ const NavBar = () => {
               onClick={() => setShowDropdown(!showDropdown)}
               className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300"
             >
+              {user?.image ? (
+                <img src={user.image} alt={user.name} className="w-full h-full rounded-full" />
+              ) : (
               <User className="w-5 h-5 text-gray-600" />
+              )}
             </button>
             {showDropdown && (
               <ul className="absolute top-12 right-0 bg-white shadow-md border rounded-lg w-48 py-2 text-sm z-50 animate-fade-in">
