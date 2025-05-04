@@ -42,6 +42,7 @@ const AddAddress = () => {
           country: "",
           pincode: "",
         });
+        navigate('/cart'); 
       } else {
         toast.error("Failed to add address. Please try again.");
       }

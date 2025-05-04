@@ -67,6 +67,8 @@ function MyOrder() {
     }
   };
 
+  console.log('Orders:', orders);
+
   const filteredOrders = orders.filter((order) =>
     order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
     order.items.some((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))

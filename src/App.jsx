@@ -21,6 +21,7 @@ import AddProduct from './pages/SellerPages/AddProduct';
 import SellerProduct from './pages/SellerPages/SellerProduct';
 import SellerOrders from './pages/SellerPages/SellerOrders';
 import SellerCategories from './pages/SellerPages/SellerCategories';
+import ProfilePage from './pages/ProfilePage';
 const App = () => {
   const location = useLocation();
   const isSellerPath = location.pathname.includes('seller');
@@ -58,6 +59,11 @@ const App = () => {
             <Route path="orders" element={<SellerOrders />} />
             <Route path="categories" element={<SellerCategories />} />
           </Route>
+
+          {/* Profile Route */}
+          <Route path="/profile" element={<ProfilePage />} />
+
+          {/* Redirect to home if no match */}
         </Routes>
       </div>
 

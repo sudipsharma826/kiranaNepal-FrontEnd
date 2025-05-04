@@ -90,10 +90,11 @@ export const AppProvider = ({ children }) => {
                     name: response.data.data.name,
                     email: response.data.data.email,
                     image: response.data.data.image,
-                    phone: response.data.data.phone
+                    phone: response.data.data.phone,
+                    address: response.data.data.address,
+                    createdAt : response.data.data.createdAt,
+                    updatedAt : response.data.data.updatedAt,
                 });
-            }else{
-                setUser(null);
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -139,10 +140,10 @@ export const AppProvider = ({ children }) => {
     };
 
     useEffect(() => {
+        checkUserLogin();
         fetchCategories();
         fetchProducts();
         checkSellerLogin();
-        checkUserLogin();
     }, []);
 
     const value = {
@@ -170,6 +171,7 @@ export const AppProvider = ({ children }) => {
         fetchProducts,
         fetchCategories,
         setCartItems,
+        checkUserLogin,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

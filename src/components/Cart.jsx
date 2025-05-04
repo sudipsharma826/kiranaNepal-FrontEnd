@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
-import { ArrowBigLeft, ShoppingBag, Plus, Minus, Trash2, CreditCard, Truck, Tag, Check } from "lucide-react";
+import { ArrowBigLeft, ShoppingBag, Plus, Minus, Trash2, CreditCard, Truck, Tag } from "lucide-react";
 import toast from "react-hot-toast";
 
 const CartPage = () => {
@@ -16,11 +16,9 @@ const CartPage = () => {
     removeWholeProduct,
     axios,
     setCartItems,
+    user
   } = useAppContext();
 
-  const [showAddress, setShowAddress] = useState(false);
-  const [address, setAddress] = useState([]);
-  const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [onlineOption, setOnlineOption] = useState(null);
@@ -30,23 +28,6 @@ const CartPage = () => {
     (product) => cartItems[product._id] && cartItems[product._id] > 0
   );
 
-  const fetchAddress = async () => {
-    try {
-      const response = await axios.get("/api/address/get_address");
-      if (response.data.success) {
-        setAddress(response.data.data);
-        if (response.data.data.length > 0) {
-          setSelectedAddressId(response.data.data[0]._id); // Default to the first address
-        }
-      } else {
-        toast.error("Failed to fetch addresses.");
-      }
-    } catch (error) {
-      console.error("Error fetching addresses:", error);
-      toast.error("Error fetching addresses.");
-    }
-  };
-
   const shippingFee = getTotalAmount() > 1000 ? 0 : 20;
   const tax = getTotalAmount() * 0.13;
 
@@ -55,13 +36,9 @@ const CartPage = () => {
     setTotalAmount(newTotal);
   }, [cartItems, tax, shippingFee, getTotalAmount]);
 
-  useEffect(() => {
-    fetchAddress();
-  }, []);
-
   const handleOrder = async () => {
-    if (!selectedAddressId) {
-      toast.error("Please select an address.");
+    if (!user.address) {
+      toast.error("Please add a delivery address.");
       return;
     }
 
@@ -82,7 +59,7 @@ const CartPage = () => {
         id: product._id,
         quantity: cartItems[product._id],
       })),
-      addressId: selectedAddressId,
+      address: user.address,
       totalAmount,
       shippingFee,
       tax,
@@ -90,7 +67,13 @@ const CartPage = () => {
     };
 
     try {
-      const response = await axios.post("/api/order/place_order_COD", orderData);
+      // Use different endpoints based on payment method
+      const endpoint = paymentMethod === "COD" 
+        ? "/api/order/place_order_COD" 
+        : "/api/order/place_order_online";
+      
+      const response = await axios.post(endpoint, orderData);
+      
       if (response.data.success) {
         toast.success("Order placed successfully!");
         navigate("/orders");
@@ -104,11 +87,6 @@ const CartPage = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const getSelectedAddress = () => {
-    if (!selectedAddressId || address.length === 0) return null;
-    return address.find(addr => addr._id === selectedAddressId);
   };
 
   if (!cartProducts.length) {
@@ -263,59 +241,23 @@ const CartPage = () => {
                   </div>
                   
                   <div className="relative">
-                    <div 
-                      className="p-3 border rounded-lg cursor-pointer flex justify-between items-center hover:border-indigo-500 transition-colors"
-                      onClick={() => setShowAddress(!showAddress)}
-                    >
+                    <div className="p-3 border rounded-lg flex justify-between items-center">
                       <div className="mr-2 flex-1 min-w-0">
-                        {getSelectedAddress() ? (
+                        {user.address ? (
                           <p className="text-gray-700 truncate">
-                            {getSelectedAddress().fullAddress}
+                            {user.address}
                           </p>
                         ) : (
-                          <p className="text-gray-400 italic">Select delivery address</p>
+                          <p className="text-gray-400 italic">No delivery address set</p>
                         )}
                       </div>
-                      <span className="text-indigo-600 text-sm font-medium">
-                        {address.length > 0 ? "Change" : "Add"}
-                      </span>
+                      <button
+                        onClick={() => navigate("/profile")}
+                        className="text-indigo-600 text-sm font-medium hover:text-indigo-800 transition-colors"
+                      >
+                        Edit
+                      </button>
                     </div>
-
-                    {showAddress && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-white border rounded-lg shadow-lg z-20 max-h-48 overflow-y-auto">
-                        {address.length > 0 ? (
-                          <>
-                            {address.map((addr) => (
-                              <div
-                                key={addr._id}
-                                onClick={() => {
-                                  setSelectedAddressId(addr._id);
-                                  setShowAddress(false);
-                                }}
-                                className={`px-4 py-3 cursor-pointer hover:bg-gray-50 flex items-center gap-2 ${
-                                  selectedAddressId === addr._id ? "bg-indigo-50" : ""
-                                }`}
-                              >
-                                {selectedAddressId === addr._id && (
-                                  <Check className="w-4 h-4 text-indigo-600 flex-shrink-0" />
-                                )}
-                                <p className={`text-sm ${selectedAddressId === addr._id ? "text-indigo-700 font-medium" : "text-gray-700"}`}>
-                                  {addr.fullAddress}
-                                </p>
-                              </div>
-                            ))}
-                          </>
-                        ) : (
-                          <p className="px-4 py-3 text-sm text-gray-500 italic">No addresses found</p>
-                        )}
-                        <div 
-                          onClick={() => navigate("/add_address")}
-                          className="px-4 py-3 text-center text-indigo-600 hover:bg-indigo-50 cursor-pointer border-t text-sm font-medium"
-                        >
-                          + Add new address
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
 
@@ -410,7 +352,7 @@ const CartPage = () => {
 
                       <button
                         onClick={() => setOnlineOption("eSewa")}
-                        className={`  bg-gray-200 p-3 border rounded-lg transition-all duration-200 flex flex-col items-center justify-center ${
+                        className={`p-3 border rounded-lg transition-all duration-200 flex flex-col items-center justify-center ${
                           onlineOption === "eSewa" 
                             ? "border-green-500 bg-green-50 shadow-sm" 
                             : "border-gray-200 hover:border-green-500"
@@ -474,9 +416,9 @@ const CartPage = () => {
 
                 <button
                   onClick={handleOrder}
-                  disabled={isSubmitting || !selectedAddressId || (paymentMethod === "Online" && !onlineOption)}
+                  disabled={isSubmitting || !user.address || (paymentMethod === "Online" && !onlineOption)}
                   className={`w-full py-3 rounded-lg text-white font-medium transition-all duration-200 
-                    ${!isSubmitting && selectedAddressId && (paymentMethod !== "Online" || onlineOption) 
+                    ${!isSubmitting && user.address && (paymentMethod !== "Online" || onlineOption) 
                       ? "bg-indigo-600 hover:bg-indigo-700 transform hover:scale-[1.02] active:scale-[0.98]"
                       : "bg-indigo-300 cursor-not-allowed"
                     }`}
@@ -484,10 +426,10 @@ const CartPage = () => {
                   {isSubmitting ? "Processing..." : "Place Order"}
                 </button>
 
-                {(!selectedAddressId || (paymentMethod === "Online" && !onlineOption)) && (
+                {(!user.address || (paymentMethod === "Online" && !onlineOption)) && (
                   <p className="mt-2 text-sm text-red-500 text-center">
-                    {!selectedAddressId 
-                      ? "Please select a delivery address" 
+                    {!user.address 
+                      ? "Please add a delivery address" 
                       : "Please select an online payment option"}
                   </p>
                 )}

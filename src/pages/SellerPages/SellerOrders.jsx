@@ -45,6 +45,8 @@ const SellerOrders = () => {
         orderId,
         status,
       });
+
+      console.log('Update response:', response.data); // Debugging line
       if (response.data.success) {
         toast.success('Order status updated successfully!');
         fetchOrders();
