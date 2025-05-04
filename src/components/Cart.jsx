@@ -21,7 +21,7 @@ const CartPage = () => {
 
   
 
-  console.log("User Cart Items from cart page:", cartItems);
+  console.log("user? Cart Items from cart page:", cartItems);
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -41,7 +41,7 @@ const CartPage = () => {
   }, [cartItems, tax, shippingFee, getTotalAmount]);
 
   const handleOrder = async () => {
-    if (!user.address) {
+    if (!user?.address) {
       toast.error("Please add a delivery address.");
       return;
     }
@@ -63,7 +63,7 @@ const CartPage = () => {
         id: product._id,
         quantity: cartItems[product._id],
       })),
-      address: user.address,
+      address: user?.address,
       totalAmount,
       shippingFee,
       tax,
@@ -247,9 +247,9 @@ const CartPage = () => {
                   <div className="relative">
                     <div className="p-3 border rounded-lg flex justify-between items-center">
                       <div className="mr-2 flex-1 min-w-0">
-                        {user.address ? (
+                        {user?.address ? (
                           <p className="text-gray-700 truncate">
-                            {user.address}
+                            {user?.address}
                           </p>
                         ) : (
                           <p className="text-gray-400 italic">No delivery address set</p>
@@ -420,9 +420,9 @@ const CartPage = () => {
 
                 <button
                   onClick={handleOrder}
-                  disabled={isSubmitting || !user.address || (paymentMethod === "Online" && !onlineOption)}
+                  disabled={isSubmitting || !user?.address || (paymentMethod === "Online" && !onlineOption)}
                   className={`w-full py-3 rounded-lg text-white font-medium transition-all duration-200 
-                    ${!isSubmitting && user.address && (paymentMethod !== "Online" || onlineOption) 
+                    ${!isSubmitting && user?.address && (paymentMethod !== "Online" || onlineOption) 
                       ? "bg-indigo-600 hover:bg-indigo-700 transform hover:scale-[1.02] active:scale-[0.98]"
                       : "bg-indigo-300 cursor-not-allowed"
                     }`}
@@ -430,9 +430,9 @@ const CartPage = () => {
                   {isSubmitting ? "Processing..." : "Place Order"}
                 </button>
 
-                {(!user.address || (paymentMethod === "Online" && !onlineOption)) && (
+                {(!user?.address || (paymentMethod === "Online" && !onlineOption)) && (
                   <p className="mt-2 text-sm text-red-500 text-center">
-                    {!user.address 
+                    {!user?.address 
                       ? "Please add a delivery address" 
                       : "Please select an online payment option"}
                   </p>
