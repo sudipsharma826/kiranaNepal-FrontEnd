@@ -16,8 +16,12 @@ const CartPage = () => {
     removeWholeProduct,
     axios,
     setCartItems,
-    user
+    user,
   } = useAppContext();
+
+  
+
+  console.log("User Cart Items from cart page:", cartItems);
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("COD");
