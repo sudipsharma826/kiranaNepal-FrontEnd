@@ -28,8 +28,10 @@ function MyOrder() {
     try {
       const response = await axios.get('/api/order/get_order');
       if (response.data.success) {
-        toast.success('Orders fetched successfully!');
         setOrders(response.data.data);
+        if(response.data.data.length === 0) {
+          toast.error('No orders found.');
+        }
       } else {
         toast.error('Failed to fetch orders.');
         setOrders([]);
