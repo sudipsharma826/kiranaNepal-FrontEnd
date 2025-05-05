@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 const AdSpaceContainer = () => {
   const adClient = import.meta.env.VITE_ADSENSE_CLIENT;
   const adSlot = import.meta.env.VITE_ADSENSE_SLOT;
-  const adFormat = "auto";
-  const fullWidthResponsive = true;
 
   const tagStyle = {
     background: 'linear-gradient(to right, red, blue)',
@@ -47,14 +45,12 @@ const AdSpaceContainer = () => {
           Ad Space
         </p>
         <div className="adsense-container w-full text-center">
-          <ins
-            className="adsbygoogle"
-            style={{ display: 'block', minHeight: '90px', width: '100%' }}
-            data-ad-client={adClient}
-            data-ad-slot={adSlot}
-            data-ad-format={adFormat}
-            data-full-width-responsive={fullWidthResponsive ? 'true' : 'false'}
-          ></ins>
+        <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client={adClient}
+     data-ad-slot={adSlot}
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
         </div>
       </div>
     </div>
