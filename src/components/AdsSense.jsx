@@ -7,7 +7,7 @@ const AdSpaceContainer = () => {
   const tagStyle = {
     background: 'linear-gradient(to right, red, blue)',
     color: 'white',
-    ...(document.body.classList.contains('dark')
+    ...(document?.body?.classList?.contains('dark')
       ? { background: 'linear-gradient(to right, #444, #888)' }
       : {}),
   };
@@ -33,7 +33,7 @@ const AdSpaceContainer = () => {
       } catch (e) {
         console.error('Adsense error:', e);
       }
-    }, 800); // Slight delay to ensure visibility
+    }, 800);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -45,12 +45,14 @@ const AdSpaceContainer = () => {
           Ad Space
         </p>
         <div className="adsense-container w-full text-center">
-        <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client={adClient}
-     data-ad-slot={adSlot}
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client={adClient}
+            data-ad-slot={adSlot}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
         </div>
       </div>
     </div>
