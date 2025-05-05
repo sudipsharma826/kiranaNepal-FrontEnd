@@ -1,20 +1,6 @@
 import { useEffect } from 'react';
 
 const AdSpaceContainer = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = import.meta.env.VITE_ADSENSE_SCRIPT_URL;
-    script.onload = () => {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   const adClient = import.meta.env.VITE_ADSENSE_CLIENT;
   const adSlot = import.meta.env.VITE_ADSENSE_SLOT;
   const adFormat = "auto";
@@ -28,6 +14,31 @@ const AdSpaceContainer = () => {
       ? { background: 'linear-gradient(to right, #444, #888)' }
       : {}),
   };
+
+  // Load the AdSense script ONCE
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = import.meta.env.VITE_ADSENSE_SCRIPT_URL;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // Wait for DOM to be ready, then trigger ad render
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error('Adsense error:', e);
+      }
+    }, 500); // Delay to ensure <ins> is rendered and visible
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
