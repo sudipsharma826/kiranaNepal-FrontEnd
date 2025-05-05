@@ -1,8 +1,16 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Youtube, Phone, Mail, MapPin, Heart } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, Phone, Mail, MapPin, Heart, Linkedin, Github } from 'lucide-react';
+import { useAppContext } from '../context/AppContext';
+import AdSpaceContainer from './AdsSense';
 
 const Footer = () => {
+  const { navigate } = useAppContext(); 
   const currentYear = new Date().getFullYear();
+  const links = [
+    { name: 'About Us', path: '/about' },
+    { name: 'Products', path: '/products' },
+    { name: 'Categories', path: '/categories' },
+  ];
 
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -19,18 +27,18 @@ const Footer = () => {
               Your trusted destination for authentic Nepali groceries and essentials, delivering quality products right to your doorstep.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="https://www.facebook.com/sudipsharma.np/" className="hover:text-white transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="hover:text-white transition-colors">
-                <Twitter className="w-5 h-5" />
+              <a href="https://www.linkedin.com/in/sudipsharmanp/" className="hover:text-white transition-colors">
+                <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="hover:text-white transition-colors">
-                <Instagram className="w-5 h-5" />
+              <a href="https://github.com/sudipsharma826" className="hover:text-white transition-colors">
+                <Github className="w-5 h-5" />
               </a>
-              <a href="#" className="hover:text-white transition-colors">
+              {/* <a href="#" className="hover:text-white transition-colors">
                 <Youtube className="w-5 h-5" />
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -38,16 +46,21 @@ const Footer = () => {
           <div>
             <h3 className="text-white text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {['About Us', 'Products', 'Categories', 'Special Offers', 'Blog'].map((item, i) => (
-                <li key={i}>
-                  <a href="#" className="hover:text-white transition-colors">{item}</a>
-                </li>
-              ))}
-            </ul>
+        {links.map((item, i) => (
+          <li key={i}>
+            <button
+              onClick={() => navigate(item.path)}
+              className="hover:text-white text-gray-300 transition-colors"
+            >
+              {item.name}
+            </button>
+          </li>
+        ))}
+      </ul>
           </div>
 
           {/* Customer Service */}
-          <div>
+          {/* <div>
             <h3 className="text-white text-lg font-bold mb-4">Customer Service</h3>
             <ul className="space-y-2">
               {['Contact Us', 'FAQs', 'Shipping Policy', 'Return Policy', 'Privacy Policy'].map((item, i) => (
@@ -56,7 +69,8 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
+          <AdSpaceContainer className="mt-12"/>
 
           {/* Contact Info */}
           <div>

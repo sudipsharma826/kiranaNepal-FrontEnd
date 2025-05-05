@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { loginWithGoogle } from "../firbaseConfiguration ";
 import toast from "react-hot-toast";
+import AdSpaceContainer from "./AdsSense";
 
 const Login = ({ onClose }) => {
   const { setUser, setShowUserLogin, axios } = useAppContext();

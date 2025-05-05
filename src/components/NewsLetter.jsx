@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
+import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
+import AdSpaceContainer from './AdsSense';
 
 const Newsletter = () => {
+  const {axios}=useAppContext();
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    if (email) {
+    try{
+    const response = await axios.post('/api/subscriber/add_subscriber', { email });
+    if (response.data.success) {
+      toast.success("Subscribed successfully!");
       setIsSubscribed(true);
       setEmail('');
       setTimeout(() => setIsSubscribed(false), 3000);
     }
-  };
+  }catch (error) {
+    toast.error("Email already exists or invalid email address");
+  }
+};
 
   return (
     <div className="bg-gradient-to-r from-indigo-600 to-blue-500 py-16">
@@ -66,6 +76,7 @@ const Newsletter = () => {
       </div>
     </div>
   );
+   
 };
 
 export default Newsletter;

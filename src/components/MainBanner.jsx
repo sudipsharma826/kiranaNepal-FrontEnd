@@ -40,12 +40,12 @@ const MainBanner = () => {
             <span>Shop Now</span>
             <ShoppingBag className="w-5 h-5 group-hover:rotate-12 transition-transform" />
           </Link>
-          <div className='absolute -bottom-15 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce'>
+          {/* <div className='absolute -bottom-15 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce'>
           <Link to={"/deals"} className='group hidden md:flex items-center gap-2 px-9 py-2 cursor-pointer'>
           Explore deals
             <ArrowDown className='w-6 h-6 text-white opacity-75' />
           </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

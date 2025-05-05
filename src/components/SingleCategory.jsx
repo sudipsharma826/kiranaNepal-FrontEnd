@@ -7,12 +7,12 @@ const SingleCategory = () => {
   const { products, currency, categories } = useAppContext();
   const { category } = useParams(); // this is the slug string
 
-  const [selectedFilters, setSelectedFilters] = useState({
-    priceRange: '',
-    dietary: [],
-    brand: '',
-    sortBy: '',
-  });
+  // const [selectedFilters, setSelectedFilters] = useState({
+  //   priceRange: '',
+  //   dietary: [],
+  //   brand: '',
+  //   sortBy: '',
+  // });
 
   // Find the category data by slug (safe lookup)
   const categoryData = categories.find(
@@ -75,14 +75,14 @@ const SingleCategory = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-lg shadow-sm mb-8">
+      {/* <div className="bg-white p-4 rounded-lg shadow-sm mb-8">
         <div className="flex items-center flex-wrap gap-4">
           <div className="flex items-center space-x-2 text-gray-600">
             <Filter className="h-5 w-5" />
             <span className="font-medium">Filters:</span>
-          </div>
+          </div> */}
           {/* Price Range Filter */}
-          <select
+          {/* <select
             className="border border-gray-300 rounded-lg px-4 py-2 bg-white"
             value={selectedFilters.priceRange}
             onChange={(e) =>
@@ -93,9 +93,9 @@ const SingleCategory = () => {
             <option value="0-50">$0 - $50</option>
             <option value="51-100">$51 - $100</option>
             <option value="101+">$101+</option>
-          </select>
+          </select> */}
           {/* Brand Filter */}
-          <select
+          {/* <select
             className="border border-gray-300 rounded-lg px-4 py-2 bg-white"
             value={selectedFilters.brand}
             onChange={(e) =>
@@ -106,9 +106,9 @@ const SingleCategory = () => {
             <option value="organic">Organic</option>
             <option value="local">Local Farms</option>
             <option value="premium">Premium</option>
-          </select>
+          </select> */}
           {/* Sort Filter */}
-          <select
+          {/* <select
             className="border border-gray-300 rounded-lg px-4 py-2 bg-white"
             value={selectedFilters.sortBy}
             onChange={(e) =>
@@ -122,7 +122,7 @@ const SingleCategory = () => {
             <option value="price-high">Price: High to Low</option>
           </select>
         </div>
-      </div>
+      </div> */}
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -115,9 +115,9 @@ function SingleProductPage() {
               <ShoppingCart className="h-5 w-5" />
               <span>Add to Cart</span>
             </button>
-            <button className="flex items-center justify-center border border-gray-300 rounded-lg px-4 py-3 hover:bg-gray-100">
+            {/* <button className="flex items-center justify-center border border-gray-300 rounded-lg px-4 py-3 hover:bg-gray-100">
               <Heart className="h-5 w-5 text-gray-600" />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

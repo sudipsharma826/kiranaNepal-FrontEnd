@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
+import AdSpaceContainer from './AdsSense';
 
 const Categories = () => {
   const { navigate, categories, fetchCategories } = useAppContext();
@@ -69,9 +70,11 @@ const Categories = () => {
           </div>
         ))}
       </div>
+      
+      <AdSpaceContainer className="mt-10" />
 
       {/* Featured Section */}
-      <div className="max-w-7xl mx-auto mt-20">
+      {/* <div className="max-w-7xl mx-auto mt-20">
         <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
@@ -95,7 +98,7 @@ const Categories = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

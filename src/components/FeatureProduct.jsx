@@ -17,7 +17,7 @@ const FeaturedProducts = () => {
             <p className="text-gray-600 text-lg">Discover top-rated picks tailored just for you</p>
           </div>
           {/* Filters */}
-          <div className="flex flex-wrap gap-3 mt-6 md:mt-0">
+          {/* <div className="flex flex-wrap gap-3 mt-6 md:mt-0">
             {['Category', 'Price Range', 'Brand'].map((filter, idx) => (
               <button
                 key={idx}
@@ -26,7 +26,7 @@ const FeaturedProducts = () => {
                 {filter} <ChevronDown className="w-4 h-4" />
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
 
         {/* Products Grid */}
@@ -48,9 +48,9 @@ const FeaturedProducts = () => {
                     alt={product.name}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
-                  <button className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-md hover:bg-white">
+                  {/* <button className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-md hover:bg-white">
                     <Heart className="w-5 h-5 text-gray-500 group-hover:text-red-500" />
-                  </button>
+                  </button> */}
                   {product.tags.map((tag, index) => (
                     <span
                       key={index}
