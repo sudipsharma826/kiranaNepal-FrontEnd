@@ -68,6 +68,9 @@ const CartPage = () => {
       shippingFee,
       tax,
       paymentMethod: finalPaymentMethod,
+      name: user?.name,
+      email: user?.email,
+      phone: user?.phone,
     };
 
     try {
@@ -77,7 +80,7 @@ const CartPage = () => {
         : "/api/order/place_order_online";
       
       const response = await axios.post(endpoint, orderData);
-      
+      if(paymentMethod === "COD"){
       if (response.data.success) {
         toast.success("Order placed successfully!");
         navigate("/orders");
@@ -85,6 +88,13 @@ const CartPage = () => {
       } else {
         toast.error("Failed to place order. Please try again.");
       }
+    }else{
+      if(response.data.success) {
+        const { payment_url } = response.data.data;
+        toast.success("Redirecting to Khalti for payment...");
+        window.location.href = payment_url;
+      }
+    }
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Error placing order. Please try again.");
@@ -354,7 +364,7 @@ const CartPage = () => {
                         </div>
                       </button>
 
-                      <button
+                      {/* <button
                         onClick={() => setOnlineOption("eSewa")}
                         className={`p-3 border rounded-lg transition-all duration-200 flex flex-col items-center justify-center ${
                           onlineOption === "eSewa" 
@@ -378,7 +388,7 @@ const CartPage = () => {
                             <div className="w-2 h-2 rounded-full bg-green-600" />
                           )}
                         </div>
-                      </button>
+                      </button> */}
                     </div>
                   )}
                 </div>

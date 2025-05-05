@@ -22,6 +22,7 @@ import SellerProduct from './pages/SellerPages/SellerProduct';
 import SellerOrders from './pages/SellerPages/SellerOrders';
 import SellerCategories from './pages/SellerPages/SellerCategories';
 import ProfilePage from './pages/ProfilePage';
+import PaymentStatus from './components/PaymentPage';
 const App = () => {
   const location = useLocation();
   const isSellerPath = location.pathname.includes('seller');
@@ -63,7 +64,8 @@ const App = () => {
           {/* Profile Route */}
           <Route path="/profile" element={<ProfilePage />} />
 
-          {/* Redirect to home if no match */}
+          {/* Payment Routes */}
+          <Route path="/payment" element={<PaymentStatus />} />
         </Routes>
       </div>
 
