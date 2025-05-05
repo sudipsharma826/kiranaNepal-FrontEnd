@@ -5,7 +5,6 @@ const AdSpaceContainer = () => {
   const adSlot = import.meta.env.VITE_ADSENSE_SLOT;
   const adFormat = "auto";
   const fullWidthResponsive = true;
-  const adStyle = { display: 'block' };
 
   const tagStyle = {
     background: 'linear-gradient(to right, red, blue)',
@@ -15,11 +14,11 @@ const AdSpaceContainer = () => {
       : {}),
   };
 
-  // Load the AdSense script ONCE
   useEffect(() => {
     const script = document.createElement('script');
     script.async = true;
     script.src = import.meta.env.VITE_ADSENSE_SCRIPT_URL;
+    script.setAttribute("crossorigin", "anonymous");
     document.body.appendChild(script);
 
     return () => {
@@ -27,29 +26,30 @@ const AdSpaceContainer = () => {
     };
   }, []);
 
-  // Wait for DOM to be ready, then trigger ad render
   useEffect(() => {
     const timeout = setTimeout(() => {
       try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        if (window.adsbygoogle && document.querySelector('.adsbygoogle')) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
       } catch (e) {
         console.error('Adsense error:', e);
       }
-    }, 500); // Delay to ensure <ins> is rendered and visible
+    }, 800); // Slight delay to ensure visibility
 
     return () => clearTimeout(timeout);
   }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-      <div className="relative w-full h-32 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-lg overflow-hidden">
+      <div className="relative w-full min-h-[90px] bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-lg overflow-hidden">
         <p className="text-sm font-semibold absolute top-2 right-2 px-2 py-1 rounded" style={tagStyle}>
           Ad Space
         </p>
-        <div className="adsense-container" style={{ textAlign: 'center', ...adStyle }}>
+        <div className="adsense-container w-full text-center">
           <ins
             className="adsbygoogle"
-            style={{ ...adStyle }}
+            style={{ display: 'block', minHeight: '90px', width: '100%' }}
             data-ad-client={adClient}
             data-ad-slot={adSlot}
             data-ad-format={adFormat}
