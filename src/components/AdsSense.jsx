@@ -12,18 +12,21 @@ const AdSpaceContainer = () => {
       : {}),
   };
 
+  // Load the AdSense script dynamically
   useEffect(() => {
     const script = document.createElement('script');
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`;
     script.async = true;
-    script.src = import.meta.env.VITE_ADSENSE_SCRIPT_URL;
-    script.setAttribute("crossorigin", "anonymous");
+    script.setAttribute('crossorigin', 'anonymous');
     document.body.appendChild(script);
 
+    // Clean up by removing the script when the component unmounts
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [adClient]);
 
+  // Trigger ad render after the DOM is ready
   useEffect(() => {
     const timeout = setTimeout(() => {
       try {
@@ -33,7 +36,7 @@ const AdSpaceContainer = () => {
       } catch (e) {
         console.error('Adsense error:', e);
       }
-    }, 800);
+    }, 800); // Slight delay to ensure visibility
 
     return () => clearTimeout(timeout);
   }, []);
@@ -45,9 +48,10 @@ const AdSpaceContainer = () => {
           Ad Space
         </p>
         <div className="adsense-container w-full text-center">
+          {/* AdSense Ins Element */}
           <ins
             className="adsbygoogle"
-            style={{ display: 'block' }}
+            style={{ display: 'block', width: '100%', height: '90px' }}
             data-ad-client={adClient}
             data-ad-slot={adSlot}
             data-ad-format="auto"
