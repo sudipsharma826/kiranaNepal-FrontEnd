@@ -72,7 +72,7 @@ const PaymentStatus = () => {
                 <p><strong>Order Id:</strong> {paymentInfo.orderId}</p>
                 <p><strong>Order Name:</strong> {paymentInfo.trackingNumber}</p>
                 <p><strong>Payment Method:</strong> {paymentInfo.paymentMethod}</p>
-                <p><strong>Amount:</strong> {currency}{Number(paymentInfo.amount) / 100}</p>
+                <p><strong>Amount:</strong> {currency}{Number(paymentInfo.amount) *100}</p>
               </div>
             )}
           </>
